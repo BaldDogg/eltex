@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Главная</title>
+    <title>Блог</title>
 </head>
 <body>
     <nav>
@@ -14,40 +14,7 @@
     </nav>
 
     <main>
-        <section>
-                <h1>Обо мне</h1>
-            <p>
-                Добро пожаловать! Меня зовут Мария, я студентка курса "Основы веб-разработки с Angular" от компании Eltex. Здесь я буду практиковаться в освоении материала, создавая свой сайт :)
-            </p>
-            <img
-                src="kotik.jpg"
-                alt="Котик рассказывает о своих простых кошачьих желаниях."
-                width="300"
-                height="245">
-        </section>
-        <section>
-                <h2>Образование</h2>
-            <section>
-                <h3>Новосибирский государственный технический университет, 2023-2027</h3>
-                <p>Бакалавриат по специальности "Информатика и вычислительная техника"</p>
-            </section>   
-            <section>
-                <h3>Курсы и сертификации</h3>
-                <ul>
-                    <li>Основы графического дизайна — НГТУ (2024)</li>
-                    <li>"Поколение Python": курс для начинающих (2022)</li>
-                </ul>
-            </section>   
-            <section>
-                <h3>Навыки:</h3>
-                <ul>
-                    <li>Программирование: Python, Bash, HTML5, C/C++, SQL </li>
-                    <li>Инструменты: Git, VS Code, PostgreSQL</li>
-                </ul>
-            </section>     
-        </section>
-        <section>
-                <h2>Последние статьи</h2>
+        <h1>Статьи</h1>
             <article>
                 <h3>Статья 1</h3>
                 <p>
@@ -69,13 +36,55 @@
                     Lorem, ipsum dolor sit amet consectetur adipisicing elit. Culpa maiores sequi dolore. Veniam inventore odit molestiae ex consectetur quas ducimus, earum cumque perferendis molestias beatae quae aliquam in obcaecati reiciendis.
                 </p>
             </article>
-            <form action="blog.html">
-                <button type="submit">Посмотреть все статьи</button>
+            <article>
+                <h3>Статья 4</h3>
+                <p>
+                    Опубликовано 5 марта 2026<br>
+                    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Culpa maiores sequi dolore. Veniam inventore odit molestiae ex consectetur quas ducimus, earum cumque perferendis molestias beatae quae aliquam in obcaecati reiciendis.
+                </p>
+            </article>
+            <article>
+                <h3>Статья 5</h3>
+                <p>
+                    Опубликовано 5 марта 2026<br>
+                    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Culpa maiores sequi dolore. Veniam inventore odit molestiae ex consectetur quas ducimus, earum cumque perferendis molestias beatae quae aliquam in obcaecati reiciendis.
+                </p>
+            </article>
+            <article>
+                <h3>Статья 6</h3>
+                <p>
+                    Опубликовано 5 марта 2026<br>
+                    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Culpa maiores sequi dolore. Veniam inventore odit molestiae ex consectetur quas ducimus, earum cumque perferendis molestias beatae quae aliquam in obcaecati reiciendis.
+                </p>
+            </article>
+            <section>
+            <h2>Создать статью</h2>
+            <form>
+                <div>
+                <input 
+                type="text"
+                id="name"
+                name="title"
+                placeholder="Заголовок"
+                required
+                minlength="1">
+                </div>
+            <div>
+                <textarea 
+                placeholder="Текст статьи" 
+                id="story"
+                name="story" 
+                rows="5" 
+                cols="33"></textarea>
+            </div>
+            <div>
+                <button>Добавить статью</button>
+            </div>
             </form>
-
-        </section>
+            </section>
     </main>
-    <footer>
+
+ <footer>
         <section>
             <h2>Контакты</h2>
             <p>
@@ -90,5 +99,6 @@
             </p>
         </section>
     </footer>
+
 </body>
 </html>
