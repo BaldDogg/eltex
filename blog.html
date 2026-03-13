@@ -4,62 +4,163 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Блог</title>
+    <link rel="stylesheet" href="styles/main.css">
 </head>
 <body>
     <nav>
+        <img src="/assets/kotikhi.gif"
+        width="70px">
         <ul>
             <li><a href="index.html">Главная</a></li>
-            <li><a href="blog.html">Блог</a></li>
+            <li class="current"><a href="blog.html">Блог</a></li>
         </ul>
     </nav>
 
     <main>
-        <h1>Статьи</h1>
-            <article>
-                <h3>Статья 1</h3>
-                <p>
-                    Опубликовано <time datetime="2026-03-05">5 марта 2026</time><br>
-                    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Culpa maiores sequi dolore. Veniam inventore odit molestiae ex consectetur quas ducimus, earum cumque perferendis molestias beatae quae aliquam in obcaecati reiciendis.
-                </p>
-            </article>
-            <article>
-                <h3>Статья 2</h3>
-                <p>
-                    Опубликовано <time datetime="2026-03-05">5 марта 2026</time><br>
-                    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Culpa maiores sequi dolore. Veniam inventore odit molestiae ex consectetur quas ducimus, earum cumque perferendis molestias beatae quae aliquam in obcaecati reiciendis.
-                </p>
-            </article>
-            <article>
-                <h3>Статья 3</h3>
-                <p>
-                    Опубликовано <time datetime="2026-03-05">5 марта 2026</time><br>
-                    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Culpa maiores sequi dolore. Veniam inventore odit molestiae ex consectetur quas ducimus, earum cumque perferendis molestias beatae quae aliquam in obcaecati reiciendis.
-                </p>
-            </article>
-            <article>
-                <h3>Статья 4</h3>
-                <p>
-                    Опубликовано <time datetime="2026-03-05">5 марта 2026</time><br>
-                    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Culpa maiores sequi dolore. Veniam inventore odit molestiae ex consectetur quas ducimus, earum cumque perferendis molestias beatae quae aliquam in obcaecati reiciendis.
-                </p>
-            </article>
-            <article>
-                <h3>Статья 5</h3>
-                <p>
-                    Опубликовано <time datetime="2026-03-05">5 марта 2026</time><br>
-                    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Culpa maiores sequi dolore. Veniam inventore odit molestiae ex consectetur quas ducimus, earum cumque perferendis molestias beatae quae aliquam in obcaecati reiciendis.
-                </p>
-            </article>
-            <article>
-                <h3>Статья 6</h3>
-                <p>
-                    Опубликовано <time datetime="2026-03-05">5 марта 2026</time><br>
-                    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Culpa maiores sequi dolore. Veniam inventore odit molestiae ex consectetur quas ducimus, earum cumque perferendis molestias beatae quae aliquam in obcaecati reiciendis.
-                </p>
-            </article>
+            <section>
+                <h1>Статьи</h1>
+            <div class="blog">
+                <article class="last-blog-post">
+                    <div>
+                        <span>Психология</span>
+                        <h3 class="post-title" title="Картинки странных котов как смысл жизни">Картинки странных котов как смысл жизни</h3>
+                        <p class="post-time">
+                            Опубликовано <time datetime="2026-03-05">5 марта 2026</time>
+                        </p>
+                        <p class="post-text">
+                            Ваши друзья постоянно говорят, что им надоели ежедневные рассылки забавных котов в 
+                            личные сообщения? Расскажем, что с этим делать и где найти единомышленников в этой статье!    
+                        </p>
+                    </div>
+                    <div class="last-blog-image">
+                        <img
+                        src="/assets/kotik1.jpg"
+                        >
+                    </div>
+                </article>
+                <article class="blog-post">
+                    <div>
+                        <span>Тайны современности</span>
+                        <h3 class="post-title" title="Почему они все время валяются и спят?!">Почему они все время валяются и спят?!</h3>
+                        <p class="post-time">
+                            Опубликовано <time datetime="2026-03-05">5 марта 2026</time>
+                        </p>
+                        <p class="post-text">
+                            Вы знали, что коты проводят во сне около 70% своей жизни? 
+                            Пока вы верстаете сайт, ваш пушистый коллега копит энергию 
+                            для ночных мяуканий, чтобы поддерживать вас в тонусе.   
+                        </p>
+                    </div>
+                    <div class="blog-image">
+                        <img
+                        src="/assets/kotik3.jpg"
+                        >
+                    </div>
+                </article>
+                <article class="blog-post">
+                    <div>
+                        <span>Наука</span>
+                        <h3 class="post-title" title="Сенсация: черная котоулитка">Сенсация: черная котоулитка</h3>
+                        <p class="post-time">
+                            Опубликовано <time datetime="2026-03-05">5 марта 2026</time>
+                        </p>
+                        <p class="post-text">
+                            Мировое научное сообщество потрясено: в глубоких зарослях дивана 
+                            была обнаружена редчайшая черная котоулитка. Уникальное существо 
+                            умеет сворачиваться в идеальный круг, обладает встроенным мурчащим 
+                            мотором и способно перемещаться к миске со скоростью звука, не разворачивая панциря.    
+                        </p>
+                    </div>
+                    <div class="blog-image">
+                        <img
+                        src="/assets/kotik4.jpg"
+                        >
+                    </div>
+                </article>
+                    <article class="blog-post">
+                    <div>
+                        <span>Мистика</span>
+                        <h3 class="post-title" title="Вам снился этот кот?">Вам снился этот кот?</h3>
+                        <p class="post-time">
+                            Опубликовано <time datetime="2026-03-05">5 марта 2026</time>
+                        </p>
+                        <p class="post-text">
+                            Вам снился этот кот? Каждую ночь, во всех странах мира, разные люди 
+                            видят это лицо во сне. Никто не знает с чем это связано. Если у вас 
+                            есть ответы, если вы тоже видели этого кота или располагаете 
+                            какой-либо информацией, которая поможет прояснить ситуацию, напишите нам, пожалуйста.    
+                        </p>
+                    </div>
+                    <div class="blog-image">
+                        <img
+                        src="/assets/kotik2.jpg"
+                        >
+                    </div>
+                </article>
+                    <article class="blog-post">
+                    <div>
+                        <span>Мистика</span>
+                        <h3 class="post-title" title="А этот кот вам снился?">А этот кот вам снился?</h3>
+                        <p class="post-time">
+                            Опубликовано <time datetime="2026-03-05">5 марта 2026</time>
+                        </p>
+                        <p class="post-text">
+                            Вам снился этот кот? Каждую ночь, во всех странах мира, разные люди 
+                            видят это лицо во сне. Никто не знает с чем это связано. Если у вас 
+                            есть ответы, если вы тоже видели этого кота или располагаете 
+                            какой-либо информацией, которая поможет прояснить ситуацию, напишите нам, пожалуйста.
+                            Стоп... Где-то я уже это видела...    
+                        </p>
+                    </div>
+                    <div class="blog-image">
+                        <img
+                        src="/assets/kotik2.1.jpg"
+                        >
+                    </div>
+                </article>
+                    <article class="blog-post">
+                    <div>
+                        <span>Осторожно: мошенники!</span>
+                        <h3 class="post-title" title="Не путайте: это не пельмень, это котенок!">Не путайте: это не пельмень, это котенок!</h3>
+                        <p class="post-time">
+                            Опубликовано <time datetime="2026-03-05">5 марта 2026</time>
+                        </p>
+                        <p class="post-text">
+                            В последнее время все чаще встречаются случаи подмены недобросовестными
+                            людьми упаковок пельменей котятами. Внимательно смотрите, не котенка ли 
+                            вы покупаете! Если вы попадетесь на эту уловку, котенок проберется
+                            в ваш дом и выпьет все молоко.    
+                        </p>
+                    </div>
+                    <div class="blog-image">
+                        <img
+                        src="/assets/kotik5.jpg"
+                        >
+                    </div>
+                </article>
+                <article class="blog-post">
+                    <div>
+                        <span>Наука</span>
+                        <h3 class="post-title" title="Сенсация: уменьшатель и увеличиватель">Сенсация: уменьшатель и увеличиватель</h3>
+                        <p class="post-time">
+                            Опубликовано <time datetime="2026-03-05">5 марта 2026</time>
+                        </p>
+                        <p class="post-text">
+                            В Кольцово были разработаны увеличиватель и уменьшатель котов. Теперь
+                            ваши любимцы могут топать или прятаться еще эффективнее!    
+                        </p>
+                    </div>
+                    <div class="blog-image">
+                        <img
+                        src="/assets/kotik6.jpg"
+                        >
+                    </div>
+                </article>
+            </div>
+            </section>
             <section>
             <h2>Создать статью</h2>
-            <form>
+            <form class="make-post" method="post">
                 <div>
                 <input 
                 type="text"
@@ -85,22 +186,52 @@
     </main>
 
     <footer>
-        <section>
-            <h2>Контакты</h2>
-            <address>
+        <section class="contact-info">
+            <section class="contacts">
+                <h2>Контакты</h2>
+                <address>
+                    <p>
+                        Email: <a href="mailto:prudnikova.9@bk.ru">prudnikova.9@bk.ru</a><br>
+                        Телефон: <a href="tel:+79607806072">+7 (960) 780-60-72</a>
+                    </p>
+                </address>
+            </section>
+            <section class="social">
+                <h2>Социальные сети</h2>
                 <p>
-                    Email: <a href="mailto:prudnikova.9@bk.ru">prudnikova.9@bk.ru</a><br>
-                    Телефон <a href="tel:+79607806072">+7 (960) 780-60-72</a>
+                    <a href="https://t.me/Shuba">Telegram</a> | <a href="https://github.com/BaldDogg">GitHub</a>
                 </p>
-            </address>
+            </section>
+            <section class="copyright">
+                <p>&copy; 2026 BaldDogg, Inc</p>
+            </section>
         </section>
-        <section>
-            <h2>Социальные сети</h2>
-            <p>
-                <a href="https://t.me/Shuba">Telegram</a> | <a href="https://github.com/BaldDogg">GitHub</a>
-            </p>
+        <section class="send-email">
+            <h3>Email</h3>
+            <form>
+                <div>
+                <input 
+                type="text"
+                id="email"
+                name="title"
+                placeholder="Введите ваш email адрес"
+                required
+                minlength="1">
+                </div>
+            <h3>Сообщение</h3>    
+            <div>
+                <textarea 
+                placeholder="Введите сообщение" 
+                id="message"
+                name="message" 
+                rows="5" 
+                cols="33"></textarea>
+            </div>
+            <div>
+                <button>Отправить</button>
+            </div>
+            </form>
         </section>
     </footer>
-
 </body>
 </html>
