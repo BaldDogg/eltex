@@ -4,29 +4,37 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Главная</title>
+    <link rel="stylesheet" href="styles/main.css">
 </head>
 <body>
     <nav>
+        <img src="/assets/kotikhi.gif"
+        width="70px">
         <ul>
-            <li><a href="index.html">Главная</a></li>
+            <li><a class="current" href="index.html">Главная</a></li>
             <li><a href="blog.html">Блог</a></li>
         </ul>
+
     </nav>
 
     <main>
-        <section>
-                <h1>Обо мне</h1>
-            <p>
-                Добро пожаловать! Меня зовут Мария, я студентка курса "Основы веб-разработки с Angular" от компании Eltex. Здесь я буду практиковаться в освоении материала, создавая свой сайт :)
-            </p>
-            <img
-                src="kotik.jpg"
-                alt="Котик рассказывает о своих простых кошачьих желаниях."
-                width="300"
-                height="245">
+        <section class="about-me">
+            <div>
+                    <h1>Обо мне</h1>
+                <p>
+                    Добро пожаловать! Меня зовут Мария, я студентка курса "Основы веб-разработки с Angular" от компании Eltex. Здесь я буду практиковаться в освоении материала, создавая свой сайт :)
+                </p>
+            </div>
+            <div>
+                <img
+                    src="assets/kotik.jpg"
+                    alt="Котик рассказывает о своих простых кошачьих желаниях."
+                    width="300"
+                    height="245">
+            </div>
         </section>
         <section>
-                <h2>Образование</h2>
+                <h2 class="line-header">Образование</h2>
             <article>
                 <h3>Новосибирский государственный технический университет, 2023-2027</h3>
                 <p>Бакалавриат по специальности "Информатика и вычислительная техника"</p>
@@ -38,58 +46,188 @@
                     <li>"Поколение Python": курс для начинающих (2022)</li>
                 </ul>
             </article>   
-            <article>
+            <article class="skills">
                 <h3>Навыки:</h3>
+                    <ul>
+                        <li> Python </li>
+                        <li> Bash </li>
+                        <li> HTML5 </li>
+                        <li> C/C++ </li>
+                        <li> SQL </li>
+                    </ul>
+            </article>  
+            <article class="instruments">
+                <div>
+                    <h3>
+                        Инструменты:
+                    </h3>
+                    <p>Инструменты, используемые в работе:</p>
+                </div>
                 <ul>
-                    <li>Программирование: Python, Bash, HTML5, C/C++, SQL </li>
-                    <li>Инструменты: Git, VS Code, PostgreSQL</li>
-                </ul>
-            </article>     
+                        <li class="line-with-text"> 
+                            <img src="/assets/Git-logo.png" alt="git" class="inst-logo">
+                            <span>Git</span> 
+                        </li>
+                        <li class="line-with-text"> 
+                            <img src="/assets/vscode.png" alt="vscode" class="inst-logo">
+                            <span>Visual Studio Code</span> 
+                        </li>
+                        <li class="line-with-text"> 
+                            <img src="/assets/psql.png" alt="psql" class="inst-logo">
+                            <span>PostgreSQL</span> 
+                        </li>
+                    </ul>
+            </article>   
         </section>
-        <section>
+        <section class="main-blog">
                 <h2>Последние статьи</h2>
-            <article>
-                <h3>Статья 1</h3>
-                <p>
-                    Опубликовано <time datetime="2026-03-05">5 марта 2026</time><br>
-                    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Culpa maiores sequi dolore. Veniam inventore odit molestiae ex consectetur quas ducimus, earum cumque perferendis molestias beatae quae aliquam in obcaecati reiciendis.
-                </p>
+            <article class="main-blog-post">
+                <div>
+                    <span>Психология</span>
+                    <h3>Картинки странных котов как смысл жизни</h3>
+                    <p>
+                        Опубликовано <time datetime="2026-03-05">5 марта 2026</time><br>
+                        Ваши друзья постоянно говорят, что им надоели ежедневные рассылки забавных котов в 
+                        личные сообщения? Расскажем, что с этим делать и где найти единомышленников в этой статье!    
+                    </p>
+                </div>
+                <div>
+                    <img class="main-blog-image"
+                    src="/assets/kotik1.jpg"
+                    >
+                </div>
             </article>
-            <article>
-                <h3>Статья 2</h3>
-                <p>
-                    Опубликовано <time datetime="2026-03-05">5 марта 2026</time><br>
-                    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Culpa maiores sequi dolore. Veniam inventore odit molestiae ex consectetur quas ducimus, earum cumque perferendis molestias beatae quae aliquam in obcaecati reiciendis.
-                </p>
+            <article class="main-blog-post">
+                <div>
+                    <span>Тайны современности</span>
+                    <h3>Почему они все время валяются и спят?!</h3>
+                    <p>
+                        Опубликовано <time datetime="2026-03-05">5 марта 2026</time><br>
+                        Вы знали, что коты проводят во сне около 70% своей жизни? 
+                        Пока вы верстаете сайт, ваш пушистый коллега копит энергию 
+                        для ночных мяуканий, чтобы поддерживать вас в тонусе.   
+                    </p>
+                </div>
+                <div>
+                    <img class="main-blog-image"
+                    src="/assets/kotik3.jpg"
+                    >
+                </div>
             </article>
-            <article>
-                <h3>Статья 3</h3>
-                <p>
-                    Опубликовано <time datetime="2026-03-05">5 марта 2026</time><br>
-                    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Culpa maiores sequi dolore. Veniam inventore odit molestiae ex consectetur quas ducimus, earum cumque perferendis molestias beatae quae aliquam in obcaecati reiciendis.
-                </p>
+            <article class="main-blog-post">
+                <div>
+                    <span>Наука</span>
+                    <h3>Сенсация: черная котоулитка</h3>
+                    <p>
+                        Опубликовано <time datetime="2026-03-05">5 марта 2026</time><br>
+                        Мировое научное сообщество потрясено: в глубоких зарослях дивана 
+                        была обнаружена редчайшая черная котоулитка. Уникальное существо 
+                        умеет сворачиваться в идеальный круг, обладает встроенным мурчащим 
+                        мотором и способно перемещаться к миске со скоростью звука, не разворачивая панциря.    
+                    </p>
+                </div>
+                <div>
+                    <img class="main-blog-image"
+                    src="/assets/kotik4.jpg"
+                    >
+                </div>
             </article>
-            <p>
+            <p class="button">
                 <a href="blog.html">Посмотреть все статьи</a>
             </p>
 
         </section>
+        <section class="hobby-section">
+    
+    <div class="hobby-header">
+        <h2>Мои хобби</h2>
+        <p>В свободное от учебы время я:</p>
+    </div>
+
+    <div class="hobby">
+        
+        <article class="hobby-card vertical-hobby">
+            <img src="/assets/hobby1.webp" alt="Изображение смешного котика">
+            <div class="hobby-overlay">
+                <h3>Собираю картинки котов</h3>
+                <p>(кидает подруга)</p>
+            </div>
+        </article>
+
+        <article class="hobby-card vertical-hobby">
+            <img src="/assets/hobby2.png" alt="Рисунок табакси для ДНД">
+            <div class="hobby-overlay">
+                <h3>Пишу лор для днд, рисую</h3>
+                <p>🤓🤓🤓🤓🤓</p>
+            </div>
+        </article>
+
+        <article class="hobby-card horizontal-hobby">
+            <img src="/assets/hobby3.jpg" alt="Смешные коты. Похожи на автобусы">
+            <div class="hobby-overlay">
+                <h3>Гуляю</h3>
+                <p>Текст про пользу погулять</p>
+            </div>
+        </article>
+
+        <article class="hobby-card horizontal-hobby">
+            <img src="/assets/hobby4.webp" alt="Настольная игра про кошек">
+            <div class="hobby-overlay">
+                <h3>Играю в настольные игры</h3>
+                <p>Остров кошек, конечно, моя любимая</p>
+            </div>
+        </article>
+
+    </div>
+</section>
+
     </main>
     <footer>
-        <section>
-            <h2>Контакты</h2>
-            <address>
+        <section class="contact-info">
+            <section class="contacts">
+                <h2>Контакты</h2>
+                <address>
+                    <p>
+                        Email: <a href="mailto:prudnikova.9@bk.ru">prudnikova.9@bk.ru</a><br>
+                        Телефон: <a href="tel:+79607806072">+7 (960) 780-60-72</a>
+                    </p>
+                </address>
+            </section>
+            <section class="social">
+                <h2>Социальные сети</h2>
                 <p>
-                    Email: <a href="mailto:prudnikova.9@bk.ru">prudnikova.9@bk.ru</a><br>
-                    Телефон <a href="tel:+79607806072">+7 (960) 780-60-72</a>
+                    <a href="https://t.me/Shuba">Telegram</a> | <a href="https://github.com/BaldDogg">GitHub</a>
                 </p>
-            </address>
+            </section>
+            <section class="copyright">
+                <p>&copy; 2026 BaldDogg, Inc</p>
+            </section>
         </section>
-        <section>
-            <h2>Социальные сети</h2>
-            <p>
-                <a href="https://t.me/Shuba">Telegram</a> | <a href="https://github.com/BaldDogg">GitHub</a>
-            </p>
+        <section class="send-email">
+            <h3>Email</h3>
+            <form>
+                <div>
+                <input 
+                type="text"
+                id="name"
+                name="title"
+                placeholder="Введите ваш email адрес"
+                required
+                minlength="1">
+                </div>
+            <h3>Сообщение</h3>    
+            <div>
+                <textarea 
+                placeholder="Введите сообщение" 
+                id="story"
+                name="story" 
+                rows="5" 
+                cols="33"></textarea>
+            </div>
+            <div>
+                <button>Отправить</button>
+            </div>
+            </form>
         </section>
     </footer>
 </body>
