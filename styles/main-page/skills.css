@@ -1,0 +1,14 @@
+.skills {
+    display: flex;
+    flex-direction: column;
+    gap: 15px 50px;
+    padding: 0;
+    margin-bottom: 30px;
+}
+
+.skills-list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 50px;
+    list-style-type: none;
+}

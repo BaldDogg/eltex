@@ -1,0 +1,33 @@
+.navigation-menu {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: flex-end;
+    gap: 20px;
+
+    .current-page {
+        color: var(--color-green);
+    }
+}
+
+.navigation-menu-link {
+    text-decoration: none;
+    transition: 0.5s;
+
+    &:hover {
+        color: var(--color-green);
+        text-shadow: 0 0 1px currentColor;
+    }
+}
+
+img {
+    padding: 0;
+    margin: 0;
+}
+
+.header_flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}

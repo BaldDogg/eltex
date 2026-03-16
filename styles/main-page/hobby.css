@@ -1,0 +1,77 @@
+.hobby-section {
+    margin-bottom: 50px;
+}
+
+.hobby-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 50px;
+    margin-bottom: 30px;
+
+    h2 {
+        margin: 0;
+    }
+
+    p {
+        margin: 0;
+        color: var(--color-accent);
+    }
+}
+
+.hobby {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(2, 250px);
+    gap: 20px;
+
+    .vertical-hobby {
+        grid-row: span 2;
+    }
+
+    .horizontal-hobby {
+        grid-column: span 2;
+    }
+}
+
+.hobby-card {
+    border-radius: 15px;
+    overflow: hidden;
+    min-width: 0;
+    min-height: 0;
+    position: relative;
+
+    .hobby-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: var(--color-accent);
+        color: var(--color-bg-hover);
+        padding: 20px;
+        opacity: 0;
+        transition: 1.5s;
+
+        &:hover {
+            opacity: 80%;
+        }
+    }
+}
+
+.hobby-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.hobby-title {
+    color: var(--color-white);
+    margin: 2px;
+}
+
+.hobby-text {
+    margin: 0;
+    color: var(--color-white);
+}

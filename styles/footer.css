@@ -1,0 +1,44 @@
+@import url(./send-email.css);
+
+footer {
+    background-color: var(--color-accent);
+    color: var(--color-white);
+    padding: 40px 0;
+
+    h2 {
+        color: var(--color-white);
+    }
+
+}
+
+.contacts-text {
+    font-style: normal;
+}
+
+.contact-link {
+    transition: 0.5s;
+
+    &:hover {
+        color: var(--color-green);
+    }
+}
+
+.social-link {
+    text-decoration: none;
+    margin: 5px;
+}
+
+.footer-flex {
+    display: flex;
+    justify-content: space-between;
+    gap: 50px;
+}
+
+.social-logo {
+    width: 30px;
+    height: 30px;
+}
+
+.copyright {
+    margin-top: 50px;
+}

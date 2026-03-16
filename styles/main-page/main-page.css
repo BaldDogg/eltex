@@ -1,0 +1,20 @@
+@import url(../common.css);
+@import url(./main-blog.css);
+@import url(./hobby.css);
+@import url(./skills.css);
+@import url(./instruments.css);
+@import url(./about-me.css);
+
+main {
+    padding: 20px 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+
+    ul {
+        list-style-type: square;
+    }
+}
+
+.line-with-text {
+    border-bottom: 2px solid var(--color-grey-light);
+}
