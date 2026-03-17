@@ -1,0 +1,39 @@
+.instruments {
+    display: flex;
+    gap: 50px;
+    justify-content: space-between;
+}
+
+.instruments-header {
+    flex: 3;
+}
+
+.instruments-list {
+    display: flex;
+    flex-direction: column;
+    list-style: none;
+    flex: 2;
+}
+
+.instrument {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding-bottom: 20px;
+    margin: 10px;
+}
+
+.instrument-logo {
+    width: 60px;
+}
+
+@media (max-width: 800px) {
+    .instruments {
+        flex-direction: column;
+    }
+
+    .instruments-list {
+        margin: 0;
+        padding: 0;
+    }
+}

@@ -1,0 +1,42 @@
+.make-post {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    max-width: 400px;
+}
+
+.make-post-title,
+.make-post-text {
+    width: 100%;
+    padding: 12px 15px;
+    border: 2px solid #cbd5e0;
+    border-radius: 5px;
+    font-family: inherit;
+    font-size: 16px;
+    color: var(--color-muted-blue);
+    resize: none;
+
+    &::placeholder {
+        color: #a0aec0;
+    }
+
+    &:focus {
+        outline: none;
+        border-color: var(--color-accent);
+    }
+}
+
+.make-post-button {
+    background-color: var(--color-green);
+    color: var(--color-white);
+    border: none;
+    border-radius: 5px;
+    padding: 12px 30px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.5s;
+
+    &:hover {
+        background-color: var(--color-green-dark);
+    }
+}

@@ -1,0 +1,35 @@
+.about-me {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    gap: 50px;
+
+}
+
+.about-me-text {
+    max-width: 1000px;
+}
+
+.about-me-image {
+    max-width: 400px;
+    border-radius: 5px 5px 140px 140px;
+}
+
+.line-header {
+    border-bottom: 3px solid var(--color-accent);
+    margin-top: 5px;
+    width: 90%;
+}
+
+@media (max-width: 800px) {
+    .about-me {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .about-me-image {
+        order: -1;
+        width: 100%;
+        max-width: 300px;
+    }
+}

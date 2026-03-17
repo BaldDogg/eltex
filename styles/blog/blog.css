@@ -1,0 +1,11 @@
+@import url(../common.css);
+@import url(./post-feed.css);
+@import url(./make-post.css);
+
+main {
+    padding: 20px 30px;
+
+    ul {
+        list-style-type: square;
+    }
+}

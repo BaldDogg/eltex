@@ -1,237 +1,230 @@
 <!DOCTYPE html>
 <html lang="ru">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Главная</title>
-    <link rel="stylesheet" href="styles/fonts.css">
-    <link rel="stylesheet" href="styles/layout.css">
-    <link rel="stylesheet" href="styles/components.css">
-    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/main-page/main-page.css">
 </head>
-<body>
-    <nav>
-        <img src="assets/kotikhi.gif"
-        width="70px">
-        <ul>
-            <li><a class="current" href="index.html">Главная</a></li>
-            <li><a href="blog.html">Блог</a></li>
-        </ul>
 
-    </nav>
+<body>
+    <header>
+        <div class="container header_flex">
+            <img class="header-logo" src="assets/kotikhi.gif" width="70px">
+            <nav>
+                <ul class="navigation-menu">
+                    <li><a class="navigation-menu-link current-page" href="index.html">Главная</a></li>
+                    <li><a class="navigation-menu-link" href="blog.html">Блог</a></li>
+                    <li><a class="navigation-menu-link" href="#contact-info">Контакты</a></li>
+                </ul>
+
+            </nav>
+        </div>
+    </header>
 
     <main>
-        <section class="about-me">
-            <div>
+        <div class="container">
+            <section class="about-me">
+                <div class="about-me-text">
                     <h1>Обо мне</h1>
-                <p>
-                    Добро пожаловать! Меня зовут Мария, я студентка курса "Основы веб-разработки с Angular" от компании Eltex. Здесь я буду практиковаться в освоении материала, создавая свой сайт :)
-                </p>
-            </div>
-            <div>
-                <img
-                    src="assets/kotik.jpg"
-                    alt="Котик рассказывает о своих простых кошачьих желаниях."
-                    width="300"
-                    height="245">
-            </div>
-        </section>
-        <section>
-                <h2 class="line-header">Образование</h2>
-            <article>
-                <h3>Новосибирский государственный технический университет, 2023-2027</h3>
-                <p>Бакалавриат по специальности "Информатика и вычислительная техника"</p>
-            </article>   
-            <article>
-                <h3>Курсы и сертификации</h3>
-                <ul>
-                    <li>Основы графического дизайна — НГТУ (2024)</li>
-                    <li>"Поколение Python": курс для начинающих (2022)</li>
-                </ul>
-            </article>   
-            <article class="skills">
-                <h3>Навыки:</h3>
+                    <p>
+                        Добро пожаловать! Меня зовут Мария, я студентка курса "Основы веб-разработки с Angular" от
+                        компании
+                        Eltex. Здесь я буду практиковаться в освоении материала, создавая свой сайт :)
+                    </p>
+                </div>
+                <img class="about-me-image" src="assets/kotik.jpg"
+                     alt="Котик рассказывает о своих простых кошачьих желаниях." width="300" height="245">
+            </section>
+            <section>
+                <h2 class="line-header education">Образование</h2>
+                <article class="education-nstu">
+                    <h3>Новосибирский государственный технический университет, 2023-2027</h3>
+                    <p>Бакалавриат по специальности "Информатика и вычислительная техника"</p>
+                </article>
+                <article class="education-courses">
+                    <h3>Курсы и сертификации</h3>
                     <ul>
-                        <li> Python </li>
-                        <li> Bash </li>
-                        <li> HTML5 </li>
-                        <li> C/C++ </li>
-                        <li> SQL </li>
+                        <li class="education-courses-list">Основы графического дизайна — НГТУ (2024)</li>
+                        <li class="education-courses-list">"Поколение Python": курс для начинающих (2022)</li>
                     </ul>
-            </article>  
-            <article class="instruments">
-                <div>
-                    <h3>
-                        Инструменты:
-                    </h3>
-                    <p>Инструменты, используемые в работе:</p>
-                </div>
-                <ul>
-                        <li class="line-with-text"> 
-                            <img src="assets/Git-logo.png" alt="git" class="inst-logo">
-                            <span>Git</span> 
+                </article>
+                <article class="skills">
+                    <h3>Навыки:</h3>
+                    <ul class="skills-list">
+                        <li class="skill line-with-text"> Python </li>
+                        <li class="skill line-with-text"> Bash </li>
+                        <li class="skill line-with-text"> HTML5 </li>
+                        <li class="skill line-with-text"> C/C++ </li>
+                        <li class="skill line-with-text"> SQL </li>
+                    </ul>
+                </article>
+                <article class="instruments">
+                    <div class="instruments-header">
+                        <h3>
+                            Инструменты:
+                        </h3>
+                        <p>Инструменты, используемые в работе:</p>
+                    </div>
+                    <ul class="instruments-list">
+                        <li class="instrument line-with-text">
+                            <img src="assets/Git-logo.png" alt="git" class="instrument-logo">
+                            <span>Git</span>
                         </li>
-                        <li class="line-with-text"> 
-                            <img src="assets/vscode.png" alt="vscode" class="inst-logo">
-                            <span>Visual Studio Code</span> 
+                        <li class="instrument line-with-text">
+                            <img src="assets/vscode.png" alt="vscode" class="instrument-logo">
+                            <span>Visual Studio Code</span>
                         </li>
-                        <li class="line-with-text"> 
-                            <img src="assets/psql.png" alt="psql" class="inst-logo">
-                            <span>PostgreSQL</span> 
+                        <li class="instrument line-with-text">
+                            <img src="assets/psql.png" alt="psql" class="instrument-logo">
+                            <span>PostgreSQL</span>
                         </li>
                     </ul>
-            </article>   
-        </section>
-        <section class="main-blog">
+                </article>
+            </section>
+            <section class="main-blog">
                 <h2>Последние статьи</h2>
-            <article class="main-blog-post">
-                <div>
-                    <span>Психология</span>
-                    <h3>Картинки странных котов как смысл жизни</h3>
-                    <p>
-                        Опубликовано <time datetime="2026-03-05">5 марта 2026</time><br>
-                        Ваши друзья постоянно говорят, что им надоели ежедневные рассылки забавных котов в 
-                        личные сообщения? Расскажем, что с этим делать и где найти единомышленников в этой статье!    
-                    </p>
+                <article class="main-blog-post">
+                    <div class="post-info">
+                        <span class="post-theme">Психология</span>
+                        <h3 class="post-title" title="Картинки странных котов как смысл жизни">Картинки странных котов
+                            как смысл жизни</h3>
+                        <p class="post-time">
+                            Опубликовано <time datetime="2026-03-05">5 марта 2026</time>
+                        </p>
+                        <p class="post-text">
+                            Ваши друзья постоянно говорят, что им надоели ежедневные рассылки забавных котов в
+                            личные сообщения? Расскажем, что с этим делать и где найти единомышленников в этой статье!
+                        </p>
+                    </div>
+                    <img class="post-image" src="assets/kotik1.jpg">
+                </article>
+                <article class="main-blog-post">
+                    <div class="post-info">
+                        <span class="post-theme">Тайны современности</span>
+                        <h3 class="post-title">Почему они все время валяются и спят?!</h3>
+                        <p class="post-time">
+                            Опубликовано <time datetime="2026-03-05">5 марта 2026</time>
+                        </p>
+                        <p class="post-text">
+                            Вы знали, что коты проводят во сне около 70% своей жизни?
+                            Пока вы верстаете сайт, ваш пушистый коллега копит энергию
+                            для ночных мяуканий, чтобы поддерживать вас в тонусе.
+                        </p>
+                    </div>
+                    <img class="post-image" src="assets/kotik3.jpg">
+                </article>
+                <article class="main-blog-post">
+                    <div class="post-info">
+                        <span class="post-theme">Наука</span>
+                        <h3 class="post-title">Сенсация: черная котоулитка</h3>
+                        <p class="post-time">
+                            Опубликовано <time datetime="2026-03-05">5 марта 2026</time>
+                        </p>
+                        <p class="post-text">
+                            Опубликовано <time datetime="2026-03-05">5 марта 2026</time><br>
+                            Мировое научное сообщество потрясено: в глубоких зарослях дивана
+                            была обнаружена редчайшая черная котоулитка. Уникальное существо
+                            умеет сворачиваться в идеальный круг, обладает встроенным мурчащим
+                            мотором и способно перемещаться к миске со скоростью звука, не разворачивая панциря.
+                        </p>
+                    </div>
+                    <img class="post-image" src="assets/kotik4.jpg">
+                </article>
+                <p class="all-posts-button">
+                    <a class="all-posts-link" href="blog.html">Посмотреть все статьи</a>
+                </p>
+
+            </section>
+            <section class="hobby-section">
+
+                <div class="hobby-header">
+                    <h2>Мои хобби</h2>
+                    <p>В свободное от учебы время я:</p>
                 </div>
-                <div>
-                    <img class="main-blog-image"
-                    src="assets/kotik1.jpg"
-                    >
+
+                <div class="hobby">
+
+                    <article class="hobby-card vertical-hobby">
+                        <img src="assets/hobby1.webp" class="hobby-image" alt="Изображение смешного котика">
+                        <div class="hobby-overlay">
+                            <h3 class="hobby-title">Собираю картинки котов</h3>
+                            <p class="hobby-text">(кидает подруга)</p>
+                        </div>
+                    </article>
+
+                    <article class="hobby-card vertical-hobby">
+                        <img src="assets/hobby2.png" class="hobby-image" alt="Рисунок табакси для ДНД">
+                        <div class="hobby-overlay">
+                            <h3 class="hobby-title">Пишу лор для днд, рисую</h3>
+                            <p class="hobby-text">🤓🤓🤓🤓🤓</p>
+                        </div>
+                    </article>
+
+                    <article class="hobby-card horizontal-hobby">
+                        <img src="assets/hobby3.jpg" class="hobby-image" alt="Смешные коты. Похожи на автобусы">
+                        <div class="hobby-overlay">
+                            <h3 class="hobby-title">Гуляю</h3>
+                            <p class="hobby-text">Текст про пользу погулять</p>
+                        </div>
+                    </article>
+
+                    <article class="hobby-card horizontal-hobby">
+                        <img src="assets/hobby4.webp" class="hobby-image" alt="Настольная игра про кошек">
+                        <div class="hobby-overlay">
+                            <h3 class="hobby-title">Играю в настольные игры</h3>
+                            <p class="hobby-text">Остров кошек, конечно, моя любимая</p>
+                        </div>
+                    </article>
+
                 </div>
-            </article>
-            <article class="main-blog-post">
-                <div>
-                    <span>Тайны современности</span>
-                    <h3>Почему они все время валяются и спят?!</h3>
-                    <p>
-                        Опубликовано <time datetime="2026-03-05">5 марта 2026</time><br>
-                        Вы знали, что коты проводят во сне около 70% своей жизни? 
-                        Пока вы верстаете сайт, ваш пушистый коллега копит энергию 
-                        для ночных мяуканий, чтобы поддерживать вас в тонусе.   
-                    </p>
-                </div>
-                <div>
-                    <img class="main-blog-image"
-                    src="assets/kotik3.jpg"
-                    >
-                </div>
-            </article>
-            <article class="main-blog-post">
-                <div>
-                    <span>Наука</span>
-                    <h3>Сенсация: черная котоулитка</h3>
-                    <p>
-                        Опубликовано <time datetime="2026-03-05">5 марта 2026</time><br>
-                        Мировое научное сообщество потрясено: в глубоких зарослях дивана 
-                        была обнаружена редчайшая черная котоулитка. Уникальное существо 
-                        умеет сворачиваться в идеальный круг, обладает встроенным мурчащим 
-                        мотором и способно перемещаться к миске со скоростью звука, не разворачивая панциря.    
-                    </p>
-                </div>
-                <div>
-                    <img class="main-blog-image"
-                    src="assets/kotik4.jpg"
-                    >
-                </div>
-            </article>
-            <p class="button">
-                <a href="blog.html">Посмотреть все статьи</a>
-            </p>
-
-        </section>
-        <section class="hobby-section">
-    
-    <div class="hobby-header">
-        <h2>Мои хобби</h2>
-        <p>В свободное от учебы время я:</p>
-    </div>
-
-    <div class="hobby">
-        
-        <article class="hobby-card vertical-hobby">
-            <img src="assets/hobby1.webp" alt="Изображение смешного котика">
-            <div class="hobby-overlay">
-                <h3>Собираю картинки котов</h3>
-                <p>(кидает подруга)</p>
-            </div>
-        </article>
-
-        <article class="hobby-card vertical-hobby">
-            <img src="assets/hobby2.png" alt="Рисунок табакси для ДНД">
-            <div class="hobby-overlay">
-                <h3>Пишу лор для днд, рисую</h3>
-                <p>🤓🤓🤓🤓🤓</p>
-            </div>
-        </article>
-
-        <article class="hobby-card horizontal-hobby">
-            <img src="assets/hobby3.jpg" alt="Смешные коты. Похожи на автобусы">
-            <div class="hobby-overlay">
-                <h3>Гуляю</h3>
-                <p>Текст про пользу погулять</p>
-            </div>
-        </article>
-
-        <article class="hobby-card horizontal-hobby">
-            <img src="assets/hobby4.webp" alt="Настольная игра про кошек">
-            <div class="hobby-overlay">
-                <h3>Играю в настольные игры</h3>
-                <p>Остров кошек, конечно, моя любимая</p>
-            </div>
-        </article>
-
-    </div>
-</section>
-
+            </section>
+        </div>
     </main>
     <footer>
-        <section class="contact-info">
-            <section class="contacts">
-                <h2>Контакты</h2>
-                <address>
+        <div class="container footer-flex">
+            <section class="contact-info" id="contact-info">
+                <section class="contacts">
+                    <h2>Контакты</h2>
+                    <address>
+                        <p class="contacts-text">
+                            Email: <a class="contact-link" href="mailto:prudnikova.9@bk.ru">prudnikova.9@bk.ru</a><br>
+                            Телефон: <a class="contact-link" href="tel:+79607806072">+7 (960) 780-60-72</a>
+                        </p>
+                    </address>
+                </section>
+                <section class="social">
+                    <h2>Социальные сети</h2>
                     <p>
-                        Email: <a href="mailto:prudnikova.9@bk.ru">prudnikova.9@bk.ru</a><br>
-                        Телефон: <a href="tel:+79607806072">+7 (960) 780-60-72</a>
+                        <a class="social-link" href="https://t.me/Shuba" title="Связаться со мной в Telegram"><img
+                                 src="assets/tg_logo.svg" class="social-logo" alt="Telegram"></a>
+                        <a class="social-link" href="https://github.com/BaldDogg" title="Мой профиль на GitHub"><img
+                                 src="assets/github_logo.png" class="social-logo" alt="GitHub"></a>
                     </p>
-                </address>
+                </section>
+                <section class="copyright">
+                    <p>&copy; 2026 BaldDogg, Inc</p>
+                </section>
             </section>
-            <section class="social">
-                <h2>Социальные сети</h2>
-                <p>
-                    <a href="https://t.me/Shuba">Telegram</a> | <a href="https://github.com/BaldDogg">GitHub</a>
-                </p>
+            <section class="send-email">
+                <form class="email-form">
+                    <div class="email-input">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" placeholder="Введите ваш email адрес" required>
+                    </div>
+                    <div class="message-input">
+                        <label for="message">Сообщение</label>
+                        <textarea placeholder="Введите сообщение" id="message" name="message" rows="5" cols="33"
+                                  required></textarea>
+                    </div>
+                    <div class="send-email-button">
+                        <button type="submit">Отправить</button>
+                    </div>
+                </form>
             </section>
-            <section class="copyright">
-                <p>&copy; 2026 BaldDogg, Inc</p>
-            </section>
-        </section>
-        <section class="send-email">
-            <h3>Email</h3>
-            <form>
-                <div>
-                <input 
-                type="text"
-                id="email"
-                name="title"
-                placeholder="Введите ваш email адрес"
-                required
-                minlength="1">
-                </div>
-            <h3>Сообщение</h3>    
-            <div>
-                <textarea 
-                placeholder="Введите сообщение" 
-                id="message"
-                name="message" 
-                rows="5" 
-                cols="33"></textarea>
-            </div>
-            <div>
-                <button>Отправить</button>
-            </div>
-            </form>
-        </section>
+        </div>
     </footer>
 </body>
+
 </html>
