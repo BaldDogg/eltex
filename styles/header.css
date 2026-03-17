@@ -31,3 +31,16 @@ img {
     justify-content: space-between;
     align-items: center;
 }
+
+@media (max-width: 800px) {
+    .header_flex {
+        align-items: start;
+        gap: 20px;
+        justify-content: start;
+    }
+
+    .navigation-menu {
+        flex-direction: column;
+        gap: 0;
+    }
+}

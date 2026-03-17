@@ -42,3 +42,16 @@ footer {
 .copyright {
     margin-top: 50px;
 }
+
+@media (max-width: 800px) {
+    .footer-flex {
+        flex-direction: column;
+        gap: 0;
+    }
+
+    .contact-info {
+        order: 1;
+    }
+
+
+}

@@ -76,3 +76,28 @@
         background-color: var(--color-green);
     }
 }
+
+@media (max-width: 800px) {
+    .post-text {
+        visibility: hidden;
+    }
+
+    .main-blog-post {
+        flex-direction: column;
+        gap: 0;
+    }
+
+    .post-image {
+        order: -1;
+        height: 200px;
+        gap: 20px;
+    }
+
+    .post-title {
+        display: -webkit-box;
+        -webkit-line-clamp: 1;
+        line-clamp: 1;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+}

@@ -6,7 +6,7 @@
 
 }
 
-.about-me0-text {
+.about-me-text {
     max-width: 1000px;
 }
 
@@ -19,4 +19,17 @@
     border-bottom: 3px solid var(--color-accent);
     margin-top: 5px;
     width: 90%;
+}
+
+@media (max-width: 800px) {
+    .about-me {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .about-me-image {
+        order: -1;
+        width: 100%;
+        max-width: 300px;
+    }
 }
