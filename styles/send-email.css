@@ -3,7 +3,7 @@
     flex-direction: column;
     color: var(--color-muted);
     float: 1 0 auto;
-    max-width: 500px;
+    width: 50%;
 }
 
 .send-email input,
@@ -64,6 +64,7 @@ textarea {
     .send-email {
         margin: 0;
         padding: 0;
+        max-width: 90%;
     }
 
     .email-form {
