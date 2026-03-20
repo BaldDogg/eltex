@@ -1,3 +1,17 @@
+.make-post-section {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.4s ease-out;
+}
+
+.make-post-section.is-open {
+    grid-template-rows: 1fr;
+}
+
+.make-post-container {
+    overflow: hidden;
+}
+
 .make-post {
     display: flex;
     flex-direction: column;
@@ -22,21 +36,45 @@
 
     &:focus {
         outline: none;
-        border-color: var(--color-accent);
+        border-color: var(--color-green);
     }
 }
 
 .make-post-button {
     background-color: var(--color-green);
     color: var(--color-white);
-    border: none;
+    border: solid 2px transparent;
     border-radius: 5px;
     padding: 12px 30px;
     font-size: 16px;
     cursor: pointer;
     transition: 0.5s;
+    flex: 1;
 
     &:hover {
         background-color: var(--color-green-dark);
     }
+}
+
+.undo-post-button {
+    background-color: var(--color-white);
+    color: var(--color-green);
+    border-radius: 5px;
+    padding: 12px 30px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.5s;
+    border: solid 2px var(--color-green);
+    flex: 1;
+
+    &:hover {
+        background-color: var(--color-green);
+        color: var(--color-white);
+    }
+}
+
+.make-post-buttons {
+    display: flex;
+    gap: 20px;
+    max-width: 500px;
 }

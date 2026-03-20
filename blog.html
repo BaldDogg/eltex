@@ -18,11 +18,33 @@
                     <li><a class="navigation-menu-link current-page" href="blog.html">Блог</a></li>
                     <li><a class="navigation-menu-link" href="#contact-info">Контакты</a></li>
                 </ul>
-
             </nav>
         </div>
     </header>
-
+    <aside class="blog-aside-bar">
+        <button class="mobile-menu-toggle"><img class="aside-logo" src="assets/toggle-logo.png"
+                 alt="Кнопка для открытия сайд-бара"></button>
+        <button class="make-post-aside" title="Создать статью"><img class="aside-logo" src="assets/make-post-logo.png"
+                 alt="логотип кнопки 'создать статью'"></button>
+        <button class="statistics-aside" title="Посмотреть статистику"><img class="aside-logo"
+                 src="assets/statistics-logo.png">
+        </button>
+        <dialog class="stats-dialog">
+            <button class="close-stats-button"><img class="close-stats-logo" src="assets/cancel-dialog.png"
+                     alt="Закрытие диалогового окна"></button>
+            <h3>Статистика страницы</h3>
+            <div class="stats-container">
+                <div class="stat-card">
+                    <div class="stat-label">Всего статей:</div>
+                    <div class="stat-value posts-count">0</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Комментарии:</div>
+                    <div class="stat-value comments-count">0</div>
+                </div>
+            </div>
+        </dialog>
+    </aside>
     <main>
         <div class="container">
             <section>
@@ -146,21 +168,26 @@
                     </article>
                 </div>
             </section>
-            <section>
-                <h2>Создать статью</h2>
-                <form class="make-post" method="post">
-                    <div>
-                        <input class="make-post-title" type="text" id="name" name="title" placeholder="Заголовок"
-                               required minlength="1">
-                    </div>
-                    <div>
-                        <textarea class="make-post-text" placeholder="Текст статьи" id="story" name="story" rows="5"
-                                  cols="33" required></textarea>
-                    </div>
-                    <div>
-                        <button type="submit" class="make-post-button">Добавить статью</button>
-                    </div>
-                </form>
+            <section class="make-post-section" id="make-post">
+                <div class="make-post-container">
+                    <h2>Добавить статью</h2>
+                    <form class="make-post" method="post">
+                        <div>
+                            <label for="make-post-title">Заголовок</label>
+                            <input class="make-post-title" type="text" id="name" name="title" placeholder="Заголовок"
+                                   required minlength="1">
+                        </div>
+                        <div>
+                            <label for="make-post-text">Текст статьи</label>
+                            <textarea class="make-post-text" placeholder="Текст статьи" id="story" name="story" rows="5"
+                                      cols="33" required></textarea>
+                        </div>
+                        <div class="make-post-buttons">
+                            <button type="submit" class="make-post-button">Добавить</button>
+                            <button type="reset" class="undo-post-button">Отмена</button>
+                        </div>
+                    </form>
+                </div>
             </section>
         </div>
     </main>
@@ -208,6 +235,22 @@
             </section>
         </div>
     </footer>
+    <template class="post-template">
+        <article class="blog-post">
+            <div class="post">
+                <span class="post-theme">Новая статья</span>
+                <h3 class="post-title" title="Клонирование статей с котами?!">Клонирование статей с котами?!</h3>
+                <p class="post-time">
+                    Опубликовано <time>Только что</time>
+                </p>
+                <p class="post-text">
+                    Это пост, являющийся шаблоном. (Смешной текст про котов)
+                </p>
+            </div>
+            <img class="blog-image" src="assets/kotik-template.jpg" alt="Картинка кота">
+        </article>
+    </template>
+    <script src="scripts/blog.js"></script>
 </body>
 
 </html>
