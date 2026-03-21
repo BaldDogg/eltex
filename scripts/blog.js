@@ -13,6 +13,9 @@ const blog = document.querySelector(".blog")
 const postTemplate = document.querySelector(".post-template");
 const makePostForm = document.querySelector(".make-post");
 
+// удалить пост константы
+const noPostsMessage = document.querySelector(".no-posts");
+
 // сайд-бар ивенты
 mobileMenu.addEventListener('click', () => {
     menuBar.classList.toggle("is-open");
@@ -63,6 +66,7 @@ undoPostButton.addEventListener('click', () => {
 });
 
 makePostForm.addEventListener('submit', (event) => {
+    noPostsMessage.classList.remove("is-visible");
     const currentLastPost = document.querySelector(".last-blog-post");
     event.preventDefault();
     if (currentLastPost) {
@@ -92,8 +96,46 @@ makePostForm.addEventListener('submit', (event) => {
         newImg.parentNode.insertBefore(newWrapper, newImg);
         newWrapper.appendChild(newImg);
     }
+    const templatePostTitle = newArticle.querySelector(".post-title");
+    const templatePostText = newArticle.querySelector(".post-text");
+    const newPostTitle = makePostForm.querySelector(".make-post-title").value;
+    const newPostText = makePostForm.querySelector(".make-post-text").value;
+
+    templatePostTitle.setAttribute("title", newPostTitle);
+    templatePostTitle.textContent = newPostTitle;
+    templatePostText.textContent = newPostText;
     blog.prepend(newPost);
     makePostForm.reset();
 });
 
+// удалить статью ивенты
+blog.addEventListener('click', (event) => {
+    const isDeleteButton = event.target.closest(".delete-post-button");
+    if (!isDeleteButton) {
+        return;
+    }
+    const postToDelete = event.target.closest("article");
+    if (postToDelete) {
+        const isLastPost = postToDelete.classList.contains("last-blog-post");
+        postToDelete.remove();
+        if (isLastPost) {
+            const nextPost = document.querySelector("article");
+            if (nextPost) {
+                nextPost.classList.remove("blog-post");
+                nextPost.classList.add("last-blog-post");
+                const newImg = nextPost.querySelector(".blog-image");
+                if (newImg) {
+                    newImg.classList.remove("blog-image");
+                    const newWrapper = document.createElement("div");
+                    newWrapper.classList.add("last-blog-image");
+                    newImg.parentNode.insertBefore(newWrapper, newImg);
+                    newWrapper.appendChild(newImg);
+                }
+            }
+        }
+        if (blog.querySelectorAll("article").length === 0) {
+            noPostsMessage.classList.add("is-visible");
+        }
+    }
 
+});
