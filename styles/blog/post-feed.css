@@ -9,6 +9,7 @@
 }
 
 .last-blog-post {
+    position: relative;
     border-radius: 30px;
     grid-column: span 3;
     overflow: hidden;
@@ -41,7 +42,12 @@
     }
 
     .post-title {
+        display: -webkit-box;
         margin: 0;
+        -webkit-line-clamp: 4;
+        line-clamp: 4;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
     }
 }
 
@@ -65,6 +71,7 @@
     flex-direction: column;
     gap: 5px;
     border-radius: 30px;
+    position: relative;
 
     .post-title {
         margin: 0;
@@ -101,6 +108,12 @@
     }
 }
 
+.post-title,
+.post-text {
+    word-break: break-all;
+    overflow-wrap: anywhere;
+}
+
 .blog-image {
     order: -1;
     display: block;
@@ -108,6 +121,54 @@
     height: 200px;
     object-fit: cover;
     object-position: center;
+}
+
+.delete-post-button {
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 50px;
+    height: 50px;
+    background: transparent;
+    border: transparent;
+    opacity: 0;
+    transition: 0.5s ease;
+    z-index: 10;
+    cursor: pointer;
+}
+
+.last-blog-post:hover {
+    .delete-post-button {
+        opacity: 1;
+    }
+}
+
+.blog-post:hover {
+    .delete-post-button {
+        opacity: 1;
+    }
+}
+
+.delete-post-logo {
+    &:hover {
+        transform: scale(1.1);
+        transition: 0.2s;
+    }
+
+    width: 35px;
+    height: 35px;
+    object-fit: contain;
+}
+
+.no-posts {
+    display: none;
+    text-align: center;
+    padding: 100px;
+    height: 300px;
+}
+
+.no-posts.is-visible {
+    display: block;
 }
 
 @media (max-width: 800px) {
