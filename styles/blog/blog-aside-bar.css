@@ -2,7 +2,7 @@
     position: fixed;
     right: 0;
     top: 50%;
-    transform: translateY(-50%) translateX(90%);
+    transform: translateY(-50%) translateX(75%);
     background-color: var(--color-white);
     border-radius: 20px 0 0 20px;
     border: solid 2px var(--color-green);
