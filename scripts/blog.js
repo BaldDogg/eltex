@@ -12,9 +12,28 @@ const makePost = document.querySelector(".make-post-section");
 const blog = document.querySelector(".blog")
 const postTemplate = document.querySelector(".post-template");
 const makePostForm = document.querySelector(".make-post");
+const imageInput = document.querySelector(".make-post-image");
+const imageInputLabel = document.querySelector(".make-post-image-label");
+const themeSelect = document.querySelector(".make-post-theme")
+const themeSelectCustom = document.querySelector(".make-post-theme-custom")
 
 // удалить пост константы
 const noPostsMessage = document.querySelector(".no-posts");
+
+class Post {
+    constructor(image, title, theme, text, date = null, id = null) {
+        this.title = title;
+        this.theme = theme;
+        this.text = text;
+        this.image = image;
+        this.date = date || new Date().toLocaleDateString('ru-RU');
+        this.id = id || crypto.randomUUID();
+    }
+
+    render() {
+
+    }
+}
 
 // сайд-бар ивенты
 mobileMenu.addEventListener('click', () => {
@@ -63,6 +82,26 @@ makePostAside.addEventListener('click', () => {
 
 undoPostButton.addEventListener('click', () => {
     makePost.classList.remove("is-open");
+});
+
+imageInput.addEventListener('change', (event) => {
+    if (imageInput.files && imageInput.files.length > 0) {
+        const fileName = imageInput.files[0].name;
+        imageInputLabel.textContent = `Выбран файл: ${fileName}`;
+    } else {
+        imageInputLabel.textContent = 'Загрузить картинку';
+    }
+});
+
+themeSelect.addEventListener('change', (event) => {
+    if (event.target.value === 'other') {
+        themeSelectCustom.style.display = 'block';
+        themeSelectCustom.required = true;
+    } else {
+        themeSelectCustom.style.display = 'none';
+        themeSelectCustom.required = false;
+        themeSelectCustom.value = '';
+    }
 });
 
 makePostForm.addEventListener('submit', (event) => {
@@ -139,3 +178,7 @@ blog.addEventListener('click', (event) => {
     }
 
 });
+
+if (blog.querySelectorAll("article").length === 0) {
+    noPostsMessage.classList.add("is-visible");
+}

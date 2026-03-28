@@ -50,7 +50,7 @@
             <section>
                 <h1 class="blog-title">Статьи</h1>
                 <div class="blog">
-                    <article class="last-blog-post">
+                    <!-- <article class="last-blog-post">
                         <button class="delete-post-button"><img class="delete-post-logo"
                                  src="assets/delete-post.png"></button>
                         <div class="post">
@@ -179,7 +179,7 @@
                             </p>
                         </div>
                         <img class="blog-image" src="assets/kotik6.jpg">
-                    </article>
+                    </article> -->
                 </div>
                 <div class="no-posts">
                     <p>Здесь пока нет статей, но вы можете это исправить!</p>
@@ -189,6 +189,25 @@
                 <div class="make-post-container">
                     <h2>Добавить статью</h2>
                     <form class="make-post" method="post">
+                        <div>
+                            <label for="make-post-image">Изображение</label>
+                            <input class="make-post-image" id="make-post-image" type="file" name="image"
+                                   placeholder="Изображение" accept="image/*">
+                            <label for="make-post-image" class="make-post-image-label">
+                                Загрузить картинку
+                            </label>
+                        </div>
+                        <div>
+                            <label for="make-post-theme">Тема</label>
+                            <select class="make-post-theme" name="select">
+                                <option value="Наука">Наука</option>
+                                <option value="Мистика">Мистика</option>
+                                <option value="Тайны современности">Тайны современности</option>
+                                <option value="other">Другое (введите тему)</option>
+                            </select>
+                            <input class="make-post-theme-custom" type="text" placeholder="Тема" required minlength="1"
+                                   maxlength="20">
+                        </div>
                         <div>
                             <label for="make-post-title">Заголовок</label>
                             <input class="make-post-title" type="text" id="name" name="title" placeholder="Заголовок"
