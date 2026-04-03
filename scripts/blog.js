@@ -17,6 +17,9 @@ const imageInputLabel = document.querySelector(".make-post-image-label");
 const themeSelect = document.querySelector(".make-post-theme");
 const themeSelectCustom = document.querySelector(".make-post-theme-custom");
 
+// лоадер константа
+const mainLoader = document.querySelector(".loader");
+
 // удалить пост константы
 const noPostsMessage = document.querySelector(".no-posts");
 
@@ -153,12 +156,23 @@ function savePostsToStorage() {
 
 // функция для загрузки постов из памяти
 function renderSavedPosts() {
-    // цикл перебирает массив с конца в начало, чтобы новые посты были сверху
-    for (let i = postsDataArray.length - 1; i >= 0; i--) {
-        const data = postsDataArray[i];
-        const savedPost = new Post(data.image, data.title, data.theme, data.text, data.date, data.id);
-        blog.append(savedPost.render());
-    }
+    noPostsMessage.classList.remove("is-visible");
+    mainLoader.classList.add("is-visible");
+
+    // имитация ожидания ответа от сервера
+    setTimeout(() => {
+        mainLoader.classList.remove("is-visible");
+
+        // цикл перебирает массив с конца в начало, чтобы новые посты были сверху
+        for (let i = postsDataArray.length - 1; i >= 0; i--) {
+            const data = postsDataArray[i];
+            const savedPost = new Post(data.image, data.title, data.theme, data.text, data.date, data.id);
+            blog.append(savedPost.render());
+        }
+        if (postsDataArray.length === 0) {
+            noPostsMessage.classList.add("is-visible");
+        }
+    }, 1000);
 }
 
 // вызов функции загрузки постов
@@ -167,6 +181,14 @@ renderSavedPosts();
 // отправка формы (создание поста)
 makePostForm.addEventListener('submit', (event) => {
     event.preventDefault();
+
+    // элементы для блокировки
+    const formElements = makePostForm.querySelectorAll('input, select, textarea, button');
+    const submitBtn = makePostForm.querySelector('.make-post-button');
+
+    // блокировка + изменение текста кнопки
+    formElements.forEach(el => el.disabled = true);
+    submitBtn.textContent = 'Сохранение...';
 
     const newPostTitle = makePostForm.querySelector(".make-post-title").value;
     const newPostText = makePostForm.querySelector(".make-post-text").value;
@@ -178,30 +200,38 @@ makePostForm.addEventListener('submit', (event) => {
 
     // функция для сохранения поста
     const createAndSavePost = (imageSrc) => {
-        const myNewPost = new Post(imageSrc, newPostTitle, newPostTheme, newPostText);
+        // задержка в 1 секунду
+        setTimeout(() => {
+            const myNewPost = new Post(imageSrc, newPostTitle, newPostTheme, newPostText);
 
-        blog.prepend(myNewPost.render());
+            blog.prepend(myNewPost.render());
 
-        // сохраняем данные в массив 
-        postsDataArray.push({
-            id: myNewPost.id,
-            title: myNewPost.title,
-            theme: myNewPost.theme,
-            text: myNewPost.text,
-            date: myNewPost.date,
-            image: myNewPost.image
-        });
+            // сохраняем данные в массив 
+            postsDataArray.push({
+                id: myNewPost.id,
+                title: myNewPost.title,
+                theme: myNewPost.theme,
+                text: myNewPost.text,
+                date: myNewPost.date,
+                image: myNewPost.image
+            });
 
-        // записываем массив в localstorage
-        savePostsToStorage();
+            // записываем массив в localstorage
+            savePostsToStorage();
 
-        // очищаем форму, потом убираем
-        makePostForm.reset();
-        imageInputLabel.textContent = 'Загрузить картинку';
-        themeSelectCustom.style.display = 'none';
-        makePost.classList.remove("is-open");
-        noPostsMessage.classList.remove("is-visible");
+            // очищаем форму, потом убираем
+            makePostForm.reset();
+            imageInputLabel.textContent = 'Загрузить картинку';
+            themeSelectCustom.style.display = 'none';
+            makePost.classList.remove("is-open");
+            noPostsMessage.classList.remove("is-visible");
+
+            // разблокировка + возврат текста кнопки
+            formElements.forEach(el => el.disabled = false);
+            submitBtn.textContent = 'Добавить';
+        }, 1000);
     };
+
 
     // проверка изображения
     if (imageInput.files && imageInput.files.length > 0) {
@@ -241,8 +271,3 @@ blog.addEventListener('click', (event) => {
         noPostsMessage.classList.add("is-visible");
     }
 });
-
-// проверка, есть ли посты при загрузке страницы (если нет, то появляется заглушка)
-if (postsDataArray.length === 0) {
-    noPostsMessage.classList.add("is-visible");
-}
