@@ -21,10 +21,17 @@
 }
 
 body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
     font-size: 16px;
     line-height: 1.6;
     color: var(--color-muted);
     margin: 0;
+}
+
+main {
+    flex-grow: 1;
 }
 
 .container {
