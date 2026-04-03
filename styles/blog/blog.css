@@ -2,6 +2,7 @@
 @import url(./post-feed.css);
 @import url(./make-post.css);
 @import url(./blog-aside-bar.css);
+@import url(./loader.css);
 
 main {
     padding: 20px 30px;
