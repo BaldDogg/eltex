@@ -1,0 +1,18 @@
+<header>
+    <div class="container header_flex">
+        <img class="header-logo" src="assets/kotikhi.gif" width="70px">
+        <nav>
+            <ul class="navigation-menu">
+                <li>
+                    <a class="navigation-menu-link" routerLink="/home" routerLinkActive="current-page">Главная</a>
+                </li>
+                <li>
+                    <a class="navigation-menu-link" routerLink="/blog" routerLinkActive="current-page">Блог</a>
+                </li>
+                <li>
+                    <a class="navigation-menu-link" (click)="scrollToContacts()" style="cursor: pointer;">Контакты</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</header>

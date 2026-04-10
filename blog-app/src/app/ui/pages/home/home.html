@@ -1,0 +1,159 @@
+<main>
+    <div class="container">
+        <section class="about-me">
+            <div class="about-me-text">
+                <h1>Обо мне</h1>
+                <p>
+                    Добро пожаловать! Меня зовут Мария, я студентка курса "Основы веб-разработки с Angular" от
+                    компании
+                    Eltex. Здесь я буду практиковаться в освоении материала, создавая свой сайт :)
+                </p>
+            </div>
+            <img class="about-me-image" src="assets/kotik.jpg"
+                 alt="Котик рассказывает о своих простых кошачьих желаниях." width="300" height="245">
+        </section>
+        <section>
+            <h2 class="line-header education">Образование</h2>
+            <article class="education-nstu">
+                <h3>Новосибирский государственный технический университет, 2023-2027</h3>
+                <p>Бакалавриат по специальности "Информатика и вычислительная техника"</p>
+            </article>
+            <article class="education-courses">
+                <h3>Курсы и сертификации</h3>
+                <ul>
+                    <li class="education-courses-list">Основы графического дизайна — НГТУ (2024)</li>
+                    <li class="education-courses-list">"Поколение Python": курс для начинающих (2022)</li>
+                </ul>
+            </article>
+            <article class="skills">
+                <h3>Навыки:</h3>
+                <ul class="skills-list">
+                    <li class="skill line-with-text"> Python </li>
+                    <li class="skill line-with-text"> Bash </li>
+                    <li class="skill line-with-text"> HTML5 </li>
+                    <li class="skill line-with-text"> C/C++ </li>
+                    <li class="skill line-with-text"> SQL </li>
+                </ul>
+            </article>
+            <article class="instruments">
+                <div class="instruments-header">
+                    <h3>
+                        Инструменты:
+                    </h3>
+                    <p>Инструменты, используемые в работе:</p>
+                </div>
+                <ul class="instruments-list">
+                    <li class="instrument line-with-text">
+                        <img src="assets/Git-logo.png" alt="git" class="instrument-logo">
+                        <span>Git</span>
+                    </li>
+                    <li class="instrument line-with-text">
+                        <img src="assets/vscode.png" alt="vscode" class="instrument-logo">
+                        <span>Visual Studio Code</span>
+                    </li>
+                    <li class="instrument line-with-text">
+                        <img src="assets/psql.png" alt="psql" class="instrument-logo">
+                        <span>PostgreSQL</span>
+                    </li>
+                </ul>
+            </article>
+        </section>
+        <section class="main-blog">
+            <h2>Последние статьи</h2>
+            <article class="main-blog-post">
+                <div class="post-info">
+                    <span class="post-theme">Психология</span>
+                    <h3 class="post-title" title="Картинки странных котов как смысл жизни">Картинки странных котов
+                        как смысл жизни</h3>
+                    <p class="post-time">
+                        Опубликовано <time datetime="2026-03-05">5 марта 2026</time>
+                    </p>
+                    <p class="post-text">
+                        Ваши друзья постоянно говорят, что им надоели ежедневные рассылки забавных котов в
+                        личные сообщения? Расскажем, что с этим делать и где найти единомышленников в этой статье!
+                    </p>
+                </div>
+                <img class="post-image" src="assets/kotik1.jpg">
+            </article>
+            <article class="main-blog-post">
+                <div class="post-info">
+                    <span class="post-theme">Тайны современности</span>
+                    <h3 class="post-title">Почему они все время валяются и спят?!</h3>
+                    <p class="post-time">
+                        Опубликовано <time datetime="2026-03-05">5 марта 2026</time>
+                    </p>
+                    <p class="post-text">
+                        Вы знали, что коты проводят во сне около 70% своей жизни?
+                        Пока вы верстаете сайт, ваш пушистый коллега копит энергию
+                        для ночных мяуканий, чтобы поддерживать вас в тонусе.
+                    </p>
+                </div>
+                <img class="post-image" src="assets/kotik3.jpg">
+            </article>
+            <article class="main-blog-post">
+                <div class="post-info">
+                    <span class="post-theme">Наука</span>
+                    <h3 class="post-title">Сенсация: черная котоулитка</h3>
+                    <p class="post-time">
+                        Опубликовано <time datetime="2026-03-05">5 марта 2026</time>
+                    </p>
+                    <p class="post-text">
+                        Опубликовано <time datetime="2026-03-05">5 марта 2026</time><br>
+                        Мировое научное сообщество потрясено: в глубоких зарослях дивана
+                        была обнаружена редчайшая черная котоулитка. Уникальное существо
+                        умеет сворачиваться в идеальный круг, обладает встроенным мурчащим
+                        мотором и способно перемещаться к миске со скоростью звука, не разворачивая панциря.
+                    </p>
+                </div>
+                <img class="post-image" src="assets/kotik4.jpg">
+            </article>
+            <p class="all-posts-button">
+                <a class="all-posts-link" routerLink="/blog">Посмотреть все статьи</a>
+            </p>
+
+        </section>
+        <section class="hobby-section">
+
+            <div class="hobby-header">
+                <h2>Мои хобби</h2>
+                <p>В свободное от учебы время я:</p>
+            </div>
+
+            <div class="hobby">
+
+                <article class="hobby-card vertical-hobby">
+                    <img src="assets/hobby1.webp" class="hobby-image" alt="Изображение смешного котика">
+                    <div class="hobby-overlay">
+                        <h3 class="hobby-title">Собираю картинки котов</h3>
+                        <p class="hobby-text">(кидает подруга)</p>
+                    </div>
+                </article>
+
+                <article class="hobby-card vertical-hobby">
+                    <img src="assets/hobby2.png" class="hobby-image" alt="Рисунок табакси для ДНД">
+                    <div class="hobby-overlay">
+                        <h3 class="hobby-title">Пишу лор для днд, рисую</h3>
+                        <p class="hobby-text">🤓🤓🤓🤓🤓</p>
+                    </div>
+                </article>
+
+                <article class="hobby-card horizontal-hobby">
+                    <img src="assets/hobby3.jpg" class="hobby-image" alt="Смешные коты. Похожи на автобусы">
+                    <div class="hobby-overlay">
+                        <h3 class="hobby-title">Гуляю</h3>
+                        <p class="hobby-text">Текст про пользу погулять</p>
+                    </div>
+                </article>
+
+                <article class="hobby-card horizontal-hobby">
+                    <img src="assets/hobby4.webp" class="hobby-image" alt="Настольная игра про кошек">
+                    <div class="hobby-overlay">
+                        <h3 class="hobby-title">Играю в настольные игры</h3>
+                        <p class="hobby-text">Остров кошек, конечно, моя любимая</p>
+                    </div>
+                </article>
+
+            </div>
+        </section>
+    </div>
+</main>

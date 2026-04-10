@@ -1,0 +1,139 @@
+// footer
+
+footer {
+    background-color: var(--color-accent);
+    color: var(--color-white);
+    padding: 40px 0;
+
+    h2 {
+        color: var(--color-white);
+    }
+
+}
+
+.contacts-text {
+    font-style: normal;
+}
+
+.contact-link {
+    transition: 0.5s;
+
+    &:hover {
+        color: var(--color-green);
+    }
+}
+
+.social-link {
+    text-decoration: none;
+    margin: 5px;
+}
+
+.footer-flex {
+    display: flex;
+    justify-content: space-between;
+    gap: 50px;
+}
+
+.social-logo {
+    width: 30px;
+    height: 30px;
+}
+
+.copyright {
+    margin-top: 50px;
+}
+
+//----------------------------------------
+// send email 
+
+.send-email {
+    display: flex;
+    flex-direction: column;
+    color: var(--color-muted);
+    flex: 1 0 auto;
+    width: 50%;
+}
+
+.send-email input,
+textarea {
+    width: 100%;
+    padding: 12px 15px;
+    border: 2px solid #cbd5e0;
+    border-radius: 5px;
+    font-family: inherit;
+    font-size: 16px;
+    color: var(--color-muted-blue);
+    resize: none;
+
+    &::placeholder {
+        color: #a0aec0;
+    }
+
+    &:focus {
+        outline: none;
+        border-color: var(--color-green);
+    }
+}
+
+.email-form {
+    background-color: var(--color-accent);
+    padding: 30px;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.email-form label {
+    font-size: 1.17em;
+    display: block;
+    color: var(--color-white);
+    font-weight: 500;
+    margin-bottom: 8px;
+}
+
+.send-email button {
+    margin: 15px 0;
+    background-color: var(--color-green);
+    color: var(--color-white);
+    border: none;
+    border-radius: 5px;
+    padding: 12px 30px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.5s;
+
+    &:hover {
+        background-color: var(--color-green-dark);
+    }
+}
+
+//-----------------------------------
+// адаптация под мобильные устройства
+
+@media (max-width: 800px) {
+
+    // send email media
+    .send-email {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+    }
+
+    .email-form {
+        padding: 0;
+        margin: 0;
+    }
+
+    // footer media
+    .footer-flex {
+        flex-direction: column;
+        gap: 0;
+    }
+
+    .contact-info {
+        order: 1;
+    }
+
+
+}

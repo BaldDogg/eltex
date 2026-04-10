@@ -1,0 +1,328 @@
+// main
+
+main {
+    padding: 20px 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+
+    ul {
+        list-style-type: square;
+    }
+}
+
+.line-with-text {
+    border-bottom: 2px solid var(--color-grey-light);
+}
+
+//----------------------------------
+// about me
+
+.about-me {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    gap: 50px;
+
+}
+
+.about-me-text {
+    max-width: 1000px;
+}
+
+.about-me-image {
+    max-width: 400px;
+    border-radius: 5px 5px 140px 140px;
+}
+
+.line-header {
+    border-bottom: 3px solid var(--color-accent);
+    margin-top: 5px;
+    width: 90%;
+}
+
+//-------------------------------------------------
+// skills
+
+.skills {
+    display: flex;
+    flex-direction: column;
+    gap: 15px 50px;
+    padding: 0;
+    margin-bottom: 30px;
+}
+
+.skills-list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 50px;
+    list-style-type: none;
+}
+
+//------------------------------------------------
+// instruments
+
+.instruments {
+    display: flex;
+    gap: 50px;
+    justify-content: space-between;
+}
+
+.instruments-header {
+    flex: 3;
+}
+
+.instruments-list {
+    display: flex;
+    flex-direction: column;
+    list-style: none;
+    flex: 2;
+}
+
+.instrument {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding-bottom: 20px;
+    margin: 10px;
+}
+
+.instrument-logo {
+    width: 60px;
+}
+
+//--------------------------------------
+// last blog posts
+
+.main-blog-post {
+    margin-bottom: 30px;
+    background-color: var(--color-orange-light);
+    border-radius: 30px;
+    overflow: hidden;
+    display: flex;
+    gap: 50px;
+    height: 300px;
+}
+
+.post-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex: 3;
+    padding: 5px 20px;
+}
+
+.post-title {
+    margin: 0;
+}
+
+.post-theme {
+    font-size: 14px;
+    color: var(--color-orange);
+    margin: 0;
+}
+
+.post-time {
+    padding: 0;
+    margin: 0;
+}
+
+.post-text {
+    display: -webkit-box;
+    -webkit-line-clamp: 5;
+    line-clamp: 5;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.post-image {
+    flex: 2;
+    display: block;
+    object-fit: cover;
+    object-position: center;
+    width: 100%;
+    height: 100%;
+}
+
+.main-blog-post:nth-of-type(even) {
+    background-color: var(--color-green-light);
+
+    .post-theme {
+        color: var(--color-green);
+    }
+}
+
+.all-posts-button {
+    text-align: center;
+    padding: 20px;
+    color: var(--color-green);
+
+}
+
+.all-posts-link {
+    text-decoration: none;
+    padding: 20px;
+    border: 1px solid;
+    border-radius: 10px;
+    border-color: var(--color-green);
+    transition: 0.5s;
+
+    &:hover {
+        color: var(--color-white);
+        background-color: var(--color-green);
+    }
+}
+
+
+//------------------------------
+// hobby
+
+.hobby-section {
+    margin-bottom: 50px;
+}
+
+.hobby-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 50px;
+    margin-bottom: 30px;
+
+    h2 {
+        margin: 0;
+    }
+
+    p {
+        margin: 0;
+        color: var(--color-accent);
+    }
+}
+
+.hobby {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(2, 250px);
+    gap: 20px;
+
+    .vertical-hobby {
+        grid-row: span 2;
+    }
+
+    .horizontal-hobby {
+        grid-column: span 2;
+    }
+}
+
+.hobby-card {
+    border-radius: 15px;
+    overflow: hidden;
+    min-width: 0;
+    min-height: 0;
+    position: relative;
+
+    .hobby-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: var(--color-accent);
+        color: var(--color-bg-hover);
+        padding: 20px;
+        opacity: 0;
+        transition: 1.5s;
+
+        &:hover {
+            opacity: 80%;
+        }
+    }
+}
+
+.hobby-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.hobby-title {
+    color: var(--color-white);
+    margin: 2px;
+}
+
+.hobby-text {
+    margin: 0;
+    color: var(--color-white);
+}
+
+
+//-----------------------------------------------------
+// адаптация для мобильных устройств
+
+@media (max-width: 800px) {
+
+    // about me
+    .about-me {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .about-me-image {
+        order: -1;
+        width: 100%;
+        max-width: 300px;
+    }
+
+    //------------------------------
+    // skills
+
+
+    .skills-list {
+        grid-template-columns: repeat(2, 1fr);
+        padding: 0;
+        margin: 0;
+    }
+
+    //------------------------------
+    // instruments
+
+    .instruments {
+        flex-direction: column;
+    }
+
+    .instruments-list {
+        margin: 0;
+        padding: 0;
+    }
+
+    //-----------------------------
+    // last blog posts
+    .post-text {
+        visibility: hidden;
+    }
+
+    .main-blog-post {
+        flex-direction: column;
+        gap: 0;
+    }
+
+    .post-image {
+        order: -1;
+        height: 200px;
+        gap: 20px;
+    }
+
+    .post-title {
+        display: -webkit-box;
+        -webkit-line-clamp: 1;
+        line-clamp: 1;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+
+    //--------------------------------
+    // hobby
+    .hobby {
+        grid-template-columns: repeat(2, 1fr);
+        grid-auto-rows: 250px;
+    }
+}
