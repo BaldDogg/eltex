@@ -1,0 +1,42 @@
+<section class="make-post-section" id="make-post" style="grid-template-rows: 1fr;">
+    <div class="make-post-container">
+        <h2>Добавить статью</h2>
+        <form class="make-post" (submit)="$event.preventDefault(); onSubmitPost()">
+            <div>
+                <label for="make-post-image">Изображение</label>
+                <input class="make-post-image" id="make-post-image" type="file" accept="image/*"
+                       (change)="onImageSelected($event)" [disabled]="isSaving">
+                <label for="make-post-image" class="make-post-image-label">{{ selectedFileName }}</label>
+            </div>
+            <div>
+                <label for="make-post-theme">Тема</label>
+                <select class="make-post-theme" name="themeSelect" [(ngModel)]="newPostTheme" [disabled]="isSaving">
+                    <option value="Наука">Наука</option>
+                    <option value="Мистика">Мистика</option>
+                    <option value="Тайны современности">Тайны современности</option>
+                    <option value="other">Другое (введите тему)</option>
+                </select>
+                <input class="make-post-theme-custom" type="text" placeholder="Тема" name="themeCustom"
+                       [(ngModel)]="newPostThemeCustom" [style.display]="newPostTheme === 'other' ? 'block' : 'none'"
+                       [disabled]="isSaving">
+            </div>
+            <div>
+                <label for="make-post-title">Заголовок</label>
+                <input class="make-post-title" type="text" name="title" placeholder="Заголовок" required minlength="1"
+                       [(ngModel)]="newPostTitle" [disabled]="isSaving">
+            </div>
+            <div>
+                <label for="make-post-text">Текст статьи</label>
+                <textarea class="make-post-text" placeholder="Текст статьи" name="text" rows="5" required
+                          [(ngModel)]="newPostText" [disabled]="isSaving"></textarea>
+            </div>
+            <div class="make-post-buttons">
+                <button type="submit" class="make-post-button" [disabled]="isSaving">
+                    {{ isSaving ? 'Сохранение...' : 'Добавить' }}
+                </button>
+                <button type="button" class="undo-post-button" (click)="closeMakePost()"
+                        [disabled]="isSaving">Отмена</button>
+            </div>
+        </form>
+    </div>
+</section>
