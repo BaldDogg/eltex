@@ -1,14 +1,4 @@
-// main
-
-main {
-    padding: 20px 30px;
-    max-width: 1200px;
-    margin: 0 auto;
-
-    ul {
-        list-style-type: square;
-    }
-}
+// main (общая часть находится в styles.scss)
 
 .line-with-text {
     border-bottom: 2px solid var(--color-grey-light);

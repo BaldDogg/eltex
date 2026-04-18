@@ -1,0 +1,12 @@
+<article class="blog-post">
+    <button class="delete-post-button" (click)="onDelete()">
+        <img class="delete-post-logo" src="assets/delete-post.png" alt="Удалить">
+    </button>
+    <div class="post">
+        <span class="post-theme">{{ post.theme }}</span>
+        <h3 class="post-title" [title]="post.title">{{ post.title }}</h3>
+        <p class="post-time">Опубликовано <time>{{ post.date }}</time></p>
+        <p class="post-text">{{ post.text }}</p>
+    </div>
+    <img class="blog-image" [src]="post.image || 'assets/kotik-template.jpg'" alt="Картинка статьи">
+</article>
