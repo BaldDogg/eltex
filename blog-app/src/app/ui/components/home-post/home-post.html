@@ -1,0 +1,9 @@
+<article class="main-blog-post" [class.green-theme]="isOdd">
+    <div class="post-info">
+        <span class="post-theme">{{ post.theme }}</span>
+        <h3 class="post-title" [title]="post.title">{{ post.title }}</h3>
+        <p class="post-time">Опубликовано <time>{{ post.date }}</time></p>
+        <p class="post-text">{{ post.text }}</p>
+    </div>
+    <img class="post-image" [src]="post.image || 'assets/kotik-template.jpg'" alt="Превью статьи">
+</article>

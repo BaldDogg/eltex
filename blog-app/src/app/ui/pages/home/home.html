@@ -58,60 +58,18 @@
                 </ul>
             </article>
         </section>
+
         <section class="main-blog">
             <h2>Последние статьи</h2>
-            <article class="main-blog-post">
-                <div class="post-info">
-                    <span class="post-theme">Психология</span>
-                    <h3 class="post-title" title="Картинки странных котов как смысл жизни">Картинки странных котов
-                        как смысл жизни</h3>
-                    <p class="post-time">
-                        Опубликовано <time datetime="2026-03-05">5 марта 2026</time>
-                    </p>
-                    <p class="post-text">
-                        Ваши друзья постоянно говорят, что им надоели ежедневные рассылки забавных котов в
-                        личные сообщения? Расскажем, что с этим делать и где найти единомышленников в этой статье!
-                    </p>
-                </div>
-                <img class="post-image" src="assets/kotik1.jpg">
-            </article>
-            <article class="main-blog-post">
-                <div class="post-info">
-                    <span class="post-theme">Тайны современности</span>
-                    <h3 class="post-title">Почему они все время валяются и спят?!</h3>
-                    <p class="post-time">
-                        Опубликовано <time datetime="2026-03-05">5 марта 2026</time>
-                    </p>
-                    <p class="post-text">
-                        Вы знали, что коты проводят во сне около 70% своей жизни?
-                        Пока вы верстаете сайт, ваш пушистый коллега копит энергию
-                        для ночных мяуканий, чтобы поддерживать вас в тонусе.
-                    </p>
-                </div>
-                <img class="post-image" src="assets/kotik3.jpg">
-            </article>
-            <article class="main-blog-post">
-                <div class="post-info">
-                    <span class="post-theme">Наука</span>
-                    <h3 class="post-title">Сенсация: черная котоулитка</h3>
-                    <p class="post-time">
-                        Опубликовано <time datetime="2026-03-05">5 марта 2026</time>
-                    </p>
-                    <p class="post-text">
-                        Опубликовано <time datetime="2026-03-05">5 марта 2026</time><br>
-                        Мировое научное сообщество потрясено: в глубоких зарослях дивана
-                        была обнаружена редчайшая черная котоулитка. Уникальное существо
-                        умеет сворачиваться в идеальный круг, обладает встроенным мурчащим
-                        мотором и способно перемещаться к миске со скоростью звука, не разворачивая панциря.
-                    </p>
-                </div>
-                <img class="post-image" src="assets/kotik4.jpg">
-            </article>
+
+            <app-home-post *ngFor="let p of recentPosts; let isOdd = odd" [post]="p" [isOdd]="isOdd">
+            </app-home-post>
+
             <p class="all-posts-button">
                 <a class="all-posts-link" routerLink="/blog">Посмотреть все статьи</a>
             </p>
-
         </section>
+
         <section class="hobby-section">
 
             <div class="hobby-header">
