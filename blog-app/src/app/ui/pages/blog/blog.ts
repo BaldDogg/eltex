@@ -1,7 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BlogPost } from '../../components/blog-post/blog-post';
-// ИМПОРТИРУЕМ НАШУ ФОРМУ!
 import { MakePost } from '../../components/make-post/make-post';
 
 export interface Post {
@@ -40,12 +39,10 @@ export class Blog implements OnInit {
     ngOnInit(): void {
         if (typeof window !== 'undefined' && typeof localStorage !== 'undefined') {
             try {
-                // локальное хранилище
                 const savedPosts = localStorage.getItem('blogPosts');
 
                 if (savedPosts) {
-                    // цикл перебирает массив с конца в начало, чтобы новые посты были сверху
-                    this.posts = JSON.parse(savedPosts).reverse();
+                    this.posts = JSON.parse(savedPosts);
                 }
             } catch (error) {
                 this.posts = [];
@@ -53,7 +50,6 @@ export class Blog implements OnInit {
             }
         }
 
-        // имитация ожидания ответа от сервера
         setTimeout(() => {
             this.isLoading = false;
             this.cdr.detectChanges();
