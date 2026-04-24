@@ -1,7 +1,13 @@
 <article class="blog-post">
-    <button class="delete-post-button" (click)="onDelete()">
-        <img class="delete-post-logo" src="assets/delete-post.png" alt="Удалить">
-    </button>
+    <div class="post-actions">
+        <button class="edit-post-button" (click)="onEdit()" title="Редактировать">
+            <img class="edit-post-logo" src="assets/edit-post.png" alt="Редактировать">
+        </button>
+        <button class="delete-post-button" (click)="onDelete()" title="Удалить">
+            <img class="delete-post-logo" src="assets/delete-post.png" alt="Удалить">
+        </button>
+    </div>
+
     <div class="post">
         <span class="post-theme">{{ post.theme }}</span>
         <h3 class="post-title" [title]="post.title">{{ post.title }}</h3>

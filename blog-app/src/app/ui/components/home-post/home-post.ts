@@ -1,15 +1,14 @@
 import { Component, Input } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { Post } from '../../pages/blog/blog';
+import { Post } from '../../../models/post';
 
 @Component({
     selector: 'app-home-post',
     standalone: true,
-    imports: [CommonModule],
+    imports: [],
     templateUrl: './home-post.html',
     styleUrl: './home-post.scss'
 })
 export class HomePost {
-    @Input() post!: Post;
-    @Input() isOdd: boolean = false;
+    @Input() public post!: Post;
+
 }

@@ -32,20 +32,27 @@
         <section>
             <h1 class="blog-title">Статьи</h1>
 
-            <div class="loader" *ngIf="isLoading" style="display: block;"></div>
-
-            <div class="blog" *ngIf="!isLoading">
-                <app-blog-post *ngFor="let p of posts" [post]="p" (deletePostEvent)="deletePost($event)">
+            @if (isLoading) {
+            <div class="loader" style="display: block;"></div>
+            } @else {
+            <div class="blog">
+                @for (p of posts; track p.id) {
+                <app-blog-post [post]="p" (deletePostEvent)="deletePost($event)" (editPostEvent)="editPost($event)">
                 </app-blog-post>
+                } @empty {
+                <div class="no-posts" style="display: block;">
+                    <p>Здесь пока нет статей, но вы можете это исправить!</p>
+                </div>
+                }
             </div>
-
-            <div class="no-posts" *ngIf="!isLoading && posts.length === 0" style="display: block;">
-                <p>Здесь пока нет статей, но вы можете это исправить!</p>
-            </div>
+            }
         </section>
 
-        <app-make-post *ngIf="isMakePostOpen" (postCreated)="addNewPost($event)" (cancelForm)="closeMakePost()">
+        @if (isMakePostOpen) {
+        <app-make-post [postToEdit]="selectedPost" (postCreated)="handleSavePost($event)"
+                       (cancelForm)="closeMakePost()">
         </app-make-post>
+        }
 
     </div>
 </main>
