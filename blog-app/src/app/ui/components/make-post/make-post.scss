@@ -1,6 +1,5 @@
 .make-post-section {
     display: grid;
-    grid-template-rows: 0fr;
     transition: grid-template-rows 0.4s ease-out;
 }
 
@@ -59,10 +58,6 @@
         outline: none;
         border-color: var(--color-green);
     }
-}
-
-.make-post-theme-custom {
-    display: none;
 }
 
 .make-post-button {
@@ -135,4 +130,23 @@
         color: var(--color-green);
         background-color: var(--color-green-light);
     }
+}
+
+.invalid-field {
+    border: 2px solid red !important;
+    outline: none;
+}
+
+.error-msg {
+    color: red;
+    font-size: 11px;
+    margin-top: 4px;
+    margin-bottom: 8px;
+    display: block;
+}
+
+.make-post-button:disabled {
+    background-color: gray;
+    cursor: not-allowed;
+    opacity: 0.6;
 }

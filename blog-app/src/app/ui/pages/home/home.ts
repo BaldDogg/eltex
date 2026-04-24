@@ -1,20 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { CommonModule } from '@angular/common';
 import { HomePost } from '../../components/home-post/home-post';
-import { Post } from '../blog/blog';
+import { Post } from '../../../models/post';
 
 @Component({
     selector: 'app-home',
     standalone: true,
-    imports: [RouterLink, CommonModule, HomePost],
+    imports: [RouterLink, HomePost],
     templateUrl: './home.html',
     styleUrl: './home.scss'
 })
 export class Home implements OnInit {
-    recentPosts: Post[] = [];
+    protected recentPosts: Post[] = [];
 
-    ngOnInit() {
+    public ngOnInit() {
         if (typeof window !== 'undefined' && typeof localStorage !== 'undefined') {
             const savedPosts = localStorage.getItem('blogPosts');
             if (savedPosts) {

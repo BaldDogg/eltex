@@ -62,8 +62,9 @@
         <section class="main-blog">
             <h2>Последние статьи</h2>
 
-            <app-home-post *ngFor="let p of recentPosts; let isOdd = odd" [post]="p" [isOdd]="isOdd">
-            </app-home-post>
+            @for (p of recentPosts; track p.id) {
+            <app-home-post [post]="p"></app-home-post>
+            }
 
             <p class="all-posts-button">
                 <a class="all-posts-link" routerLink="/blog">Посмотреть все статьи</a>

@@ -114,27 +114,24 @@
     object-position: center;
 }
 
-.delete-post-button {
-    position: absolute;
-    right: 0;
-    top: 0;
+.delete-post-button,
+.edit-post-button {
     width: 50px;
     height: 50px;
     background: transparent;
     border: transparent;
-    opacity: 0;
     transition: 0.5s ease;
-    z-index: 10;
     cursor: pointer;
 }
 
 .blog-post:hover {
-    .delete-post-button {
+    .post-actions {
         opacity: 1;
     }
 }
 
-.delete-post-logo {
+.delete-post-logo,
+.edit-post-logo {
     width: 35px;
     height: 35px;
     object-fit: contain;
@@ -143,4 +140,17 @@
         transform: scale(1.1);
         transition: 0.2s;
     }
+}
+
+.post-actions {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    display: flex;
+    gap: 5px;
+    /* Расстояние между кнопками */
+    z-index: 10;
+    opacity: 0;
+    /* Прячем обе кнопки по умолчанию */
+    transition: 0.5s ease;
 }

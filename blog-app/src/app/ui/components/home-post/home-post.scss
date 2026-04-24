@@ -48,11 +48,16 @@
     height: 100%;
 }
 
-.main-blog-post.green-theme {
-    background-color: var(--color-green-light);
+:host {
+    display: block;
+    width: 100%;
 
-    .post-theme {
-        color: var(--color-green);
+    &:nth-child(even) .main-blog-post {
+        background-color: var(--color-green-light);
+
+        .post-theme {
+            color: var(--color-green);
+        }
     }
 }
 

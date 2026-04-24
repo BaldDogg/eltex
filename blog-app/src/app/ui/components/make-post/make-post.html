@@ -1,41 +1,64 @@
-<section class="make-post-section" id="make-post" style="grid-template-rows: 1fr;">
+<section class="make-post-section" id="make-post">
     <div class="make-post-container">
-        <h2>Добавить статью</h2>
-        <form class="make-post" (submit)="$event.preventDefault(); onSubmitPost()">
+        <h2>{{ postToEdit ? 'Изменить статью' : 'Добавить статью' }}</h2>
+
+        <form class="make-post" [formGroup]="postForm" (ngSubmit)="onSubmitPost()">
+
             <div>
                 <label for="make-post-image">Изображение</label>
                 <input class="make-post-image" id="make-post-image" type="file" accept="image/*"
-                       (change)="onImageSelected($event)" [disabled]="isSaving">
+                       (change)="onImageSelected($event)">
                 <label for="make-post-image" class="make-post-image-label">{{ selectedFileName }}</label>
             </div>
+
             <div>
                 <label for="make-post-theme">Тема</label>
-                <select class="make-post-theme" name="themeSelect" [(ngModel)]="newPostTheme" [disabled]="isSaving">
+                <select class="make-post-theme" formControlName="theme">
                     <option value="Наука">Наука</option>
                     <option value="Мистика">Мистика</option>
                     <option value="Тайны современности">Тайны современности</option>
                     <option value="other">Другое (введите тему)</option>
                 </select>
-                <input class="make-post-theme-custom" type="text" placeholder="Тема" name="themeCustom"
-                       [(ngModel)]="newPostThemeCustom" [style.display]="newPostTheme === 'other' ? 'block' : 'none'"
-                       [disabled]="isSaving">
+
+                @if (postForm.get('theme')?.value === 'other') {
+                <input class="make-post-theme-custom" type="text" placeholder="Своя тема" formControlName="themeCustom">
+                }
             </div>
+
             <div>
                 <label for="make-post-title">Заголовок</label>
-                <input class="make-post-title" type="text" name="title" placeholder="Заголовок" required minlength="1"
-                       [(ngModel)]="newPostTitle" [disabled]="isSaving">
+                <input class="make-post-title"
+                       [class.invalid-field]="postForm.get('title')?.invalid && postForm.get('title')?.touched"
+                       type="text" formControlName="title" placeholder="Заголовок">
+
+                @if (postForm.get('title')?.hasError('required') && postForm.get('title')?.touched) {
+                <span class="error-msg">Название статьи обязательно</span>
+                }
+                @if (postForm.get('title')?.hasError('minlength') && postForm.get('title')?.touched) {
+                <span class="error-msg">Минимальное количество символов: 25</span>
+                }
             </div>
+
             <div>
                 <label for="make-post-text">Текст статьи</label>
-                <textarea class="make-post-text" placeholder="Текст статьи" name="text" rows="5" required
-                          [(ngModel)]="newPostText" [disabled]="isSaving"></textarea>
+                <textarea class="make-post-text"
+                          [class.invalid-field]="postForm.get('text')?.invalid && postForm.get('text')?.touched"
+                          placeholder="Текст статьи" formControlName="text" rows="5"></textarea>
+
+                @if (postForm.get('text')?.hasError('required') && postForm.get('text')?.touched) {
+                <span class="error-msg">Текст статьи обязателен</span>
+                }
             </div>
+
             <div class="make-post-buttons">
-                <button type="submit" class="make-post-button" [disabled]="isSaving">
-                    {{ isSaving ? 'Сохранение...' : 'Добавить' }}
+                <button type="submit" class="make-post-button" [disabled]="postForm.invalid || isSaving">
+                    @if (isSaving) {
+                    Сохранение...
+                    } @else {
+                    {{ postToEdit ? 'Сохранить' : 'Добавить' }}
+                    }
                 </button>
-                <button type="button" class="undo-post-button" (click)="closeMakePost()"
-                        [disabled]="isSaving">Отмена</button>
+                <button type="button" class="undo-post-button" (click)="closeMakePost()">Отмена</button>
             </div>
         </form>
     </div>
