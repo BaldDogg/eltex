@@ -25,6 +25,20 @@ body {
     margin: 0;
 }
 
+body.dark-theme {
+    --color-accent: #d1d6e3;
+    --color-muted: #dfdfe1;
+    --color-grey-light: #404144;
+    --color-white: #181818;
+    --color-orange: #d45d35;
+    --color-orange-light: #3c3938;
+    --color-green: #6bcd64;
+    --color-green-light: #2f312f;
+    --color-green-dark: #5fbe5b;
+
+    background-color: var(--color-white);
+}
+
 main {
     flex-grow: 1;
     padding: 20px 30px;
@@ -71,6 +85,11 @@ a:link,
 a:visited {
     color: currentColor;
 }
+
+.line-with-text {
+    border-bottom: 2px solid var(--color-grey-light);
+}
+
 
 @media (max-width: 800px) {
     body {

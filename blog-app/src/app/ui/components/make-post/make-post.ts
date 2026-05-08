@@ -1,4 +1,4 @@
-import { Component, Output, EventEmitter, ChangeDetectorRef, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Output, EventEmitter, input, computed, effect } from '@angular/core';
 import { ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
 import { Post } from '../../../models/post';
 
@@ -9,12 +9,20 @@ import { Post } from '../../../models/post';
     templateUrl: './make-post.html',
     styleUrl: './make-post.scss'
 })
-export class MakePost implements OnChanges {
+export class MakePost {
     // редактировать, удалить пост
-    @Input() postToEdit: Post | null = null;
-    @Output() postCreated = new EventEmitter<Post>();
+    postToEdit = input<Post | null>(null);
 
+    @Output() postCreated = new EventEmitter<Post>();
     @Output() cancelForm = new EventEmitter<void>();
+
+    protected formTitle = computed(() => {
+        return this.postToEdit() ? 'Изменить статью' : 'Добавить статью';
+    });
+
+    protected saveButtonTitle = computed(() => {
+        return this.postToEdit() ? 'Сохранить' : 'Добавить';
+    });
 
     // добавить статью константы
     protected postForm = new FormGroup({
@@ -28,25 +36,24 @@ export class MakePost implements OnChanges {
     protected selectedFileName = 'Загрузить картинку';
     protected isSaving = false;
 
-    constructor(private cdr: ChangeDetectorRef) { }
-
-    public ngOnChanges(changes: SimpleChanges): void {
-        if (changes['postToEdit']) {
-            if (this.postToEdit) {
+    constructor() {
+        effect(() => {
+            const post = this.postToEdit();
+            if (post) {
                 const defaultThemes = ['Наука', 'Мистика', 'Тайны современности'];
-                const isCustomTheme = !defaultThemes.includes(this.postToEdit.theme);
+                const isCustomTheme = !defaultThemes.includes(post.theme);
 
                 this.postForm.patchValue({
-                    title: this.postToEdit.title,
-                    text: this.postToEdit.text,
-                    theme: isCustomTheme ? 'other' : this.postToEdit.theme,
-                    themeCustom: isCustomTheme ? this.postToEdit.theme : '',
-                    image: this.postToEdit.image
+                    title: post.title,
+                    text: post.text,
+                    theme: isCustomTheme ? 'other' : post.theme,
+                    themeCustom: isCustomTheme ? post.theme : '',
+                    image: post.image
                 });
             } else {
                 this.postForm.reset({ theme: 'Наука', image: 'assets/kotik-template.jpg' });
             }
-        }
+        });
     }
 
     // отображение имени загруженного изображения
@@ -90,14 +97,16 @@ export class MakePost implements OnChanges {
                 finalTheme = formValues.themeCustom;
             }
 
+            const currentPost = this.postToEdit();
+
             const newPost: Post = {
                 // создаем id, чтобы потом удалять по нему посты
-                id: this.postToEdit ? this.postToEdit.id : crypto.randomUUID(),
+                id: currentPost ? currentPost.id : crypto.randomUUID(),
                 title: formValues.title || '',
                 text: formValues.text || '',
                 theme: finalTheme || 'Наука',
                 image: formValues.image || 'assets/kotik-template.jpg',
-                date: this.postToEdit ? this.postToEdit.date : new Date().toLocaleDateString('ru-RU')
+                date: currentPost ? currentPost.date : new Date().toLocaleDateString('ru-RU')
             };
 
             this.postCreated.emit(newPost);
@@ -110,7 +119,6 @@ export class MakePost implements OnChanges {
             this.isSaving = false;
 
             // обновляем экран в этом компоненте
-            this.cdr.detectChanges();
         }, 1000);
     }
 

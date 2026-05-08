@@ -1,0 +1,17 @@
+<section class="hobby-section">
+    <div class="hobby-header">
+        <h2>Мои хобби</h2>
+        <p>В свободное от учебы время я:</p>
+    </div>
+    <div class="hobby">
+        @for (h of hobbiesList; track h.title) {
+        <article class="hobby-card" [class]="h.cssClass">
+            <img [src]="h.img" class="hobby-image" [alt]="h.title">
+            <div class="hobby-overlay">
+                <h3 class="hobby-title">{{ h.title }}</h3>
+                <p class="hobby-text">{{ h.text }}</p>
+            </div>
+        </article>
+        }
+    </div>
+</section>

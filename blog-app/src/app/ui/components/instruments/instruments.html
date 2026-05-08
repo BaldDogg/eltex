@@ -1,0 +1,14 @@
+<article class="instruments">
+    <div class="instruments-header">
+        <h3>Инструменты:</h3>
+        <p>Инструменты, используемые в работе:</p>
+    </div>
+    <ul class="instruments-list">
+        @for (inst of instrumentsList; track inst.name) {
+        <li class="instrument line-with-text">
+            <img [src]="inst.logo" [alt]="inst.name" class="instrument-logo">
+            <span>{{ inst.name }}</span>
+        </li>
+        }
+    </ul>
+</article>

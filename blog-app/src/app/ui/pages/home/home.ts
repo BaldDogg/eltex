@@ -1,33 +1,45 @@
-import { Component, OnInit } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Component, OnInit, inject, computed } from '@angular/core';
+import { RouterModule } from '@angular/router';
 import { HomePost } from '../../components/home-post/home-post';
-import { Post } from '../../../models/post';
+import { ArticlesStoreService } from '../../../services/articles/articles-store.service';
+import { ARTICLES_SERVICE_TOKEN } from '../../../services/articles/articles-service.token';
+
+import { AboutMe } from '../../components/about-me/about-me';
+import { Education } from '../../components/education/education';
+import { Skills } from '../../components/skills/skills';
+import { Instruments } from '../../components/instruments/instruments';
+import { Hobbies } from '../../components/hobbies/hobbies';
 
 @Component({
     selector: 'app-home',
     standalone: true,
-    imports: [RouterLink, HomePost],
+    imports: [
+        RouterModule,
+        HomePost,
+        AboutMe,
+        Education,
+        Skills,
+        Instruments,
+        Hobbies
+    ],
     templateUrl: './home.html',
     styleUrl: './home.scss'
 })
 export class Home implements OnInit {
-    protected recentPosts: Post[] = [];
+    // сервисы
+    private dataService = inject(ARTICLES_SERVICE_TOKEN);
+    public store = inject(ArticlesStoreService);
 
-    public ngOnInit() {
-        if (typeof window !== 'undefined' && typeof localStorage !== 'undefined') {
-            const savedPosts = localStorage.getItem('blogPosts');
-            if (savedPosts) {
-                const allPosts: Post[] = JSON.parse(savedPosts);
-                this.recentPosts = allPosts.slice(0, 3);
-            }
-        }
+    // вычисляем 3 последние статьи из стора
+    protected recentPosts = computed(() => {
+        return this.store.posts().slice(0, 3);
+    });
 
-        if (this.recentPosts.length === 0) {
-            this.recentPosts = [
-                { id: '1', title: 'Картинки странных котов как смысл жизни', theme: 'Психология', text: 'Привет, я замещаю пост, которого еще нет. Вы можете исправить это!', date: '5 марта 2026', image: 'assets/kotik1.jpg' },
-                { id: '2', title: 'Почему они все время валяются и спят?!', theme: 'Тайны современности', text: 'Привет, я тоже замещаю пост, которого еще нет. Вы можете исправить это!', date: '5 марта 2026', image: 'assets/kotik3.jpg' },
-                { id: '3', title: 'Сенсация: черная котоулитка', theme: 'Наука', text: 'Привет, и я замещаю пост, которого еще нет. Вы можете исправить это!', date: '5 марта 2026', image: 'assets/kotik4.jpg' }
-            ];
+    ngOnInit(): void {
+        if (!this.store.isLoaded()) {
+            this.dataService.getPosts(1, 100).subscribe(res => {
+                this.store.setPostsData(res.posts, res.totalCount);
+            });
         }
     }
 }
