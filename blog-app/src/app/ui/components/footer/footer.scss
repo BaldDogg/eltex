@@ -8,7 +8,26 @@ footer {
     h2 {
         color: var(--color-white);
     }
+}
 
+// стили для темной темы
+:host-context(body.dark-theme) {
+    footer {
+        background-color: var(--color-white);
+        color: var(--color-text); // поменяла на базовый текст, чтобы читалось (или оставь --color-accent)
+
+        h2 {
+            color: var(--color-text);
+        }
+    }
+
+    .email-form {
+        background-color: var(--color-grey-light);
+
+        label {
+            color: var(--color-text); // перекрашиваем подписи над инпутами
+        }
+    }
 }
 
 .contacts-text {
@@ -55,7 +74,7 @@ footer {
 }
 
 .send-email input,
-textarea {
+.send-email textarea {
     width: 100%;
     padding: 12px 15px;
     border: 2px solid #cbd5e0;
@@ -134,6 +153,5 @@ textarea {
     .contact-info {
         order: 1;
     }
-
 
 }

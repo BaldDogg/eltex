@@ -17,7 +17,7 @@
         <div class="stats-container">
             <div class="stat-card">
                 <div class="stat-label">Всего статей:</div>
-                <div class="stat-value posts-count">{{ posts.length }}</div>
+                <div class="stat-value posts-count">{{ store.totalCount() }}</div>
             </div>
             <div class="stat-card">
                 <div class="stat-label">Комментарии:</div>
@@ -32,11 +32,11 @@
         <section>
             <h1 class="blog-title">Статьи</h1>
 
-            @if (isLoading) {
+            @if (isLoading()) {
             <div class="loader" style="display: block;"></div>
             } @else {
             <div class="blog">
-                @for (p of posts; track p.id) {
+                @for (p of store.posts(); track p.id) {
                 <app-blog-post [post]="p" (deletePostEvent)="deletePost($event)" (editPostEvent)="editPost($event)">
                 </app-blog-post>
                 } @empty {
@@ -44,12 +44,30 @@
                     <p>Здесь пока нет статей, но вы можете это исправить!</p>
                 </div>
                 }
+
+                @if (totalPages() > 1) {
+                <div class="pagination">
+                    <button class="page-btn" [disabled]="store.currentPage() === 1"
+                            (click)="loadPage(store.currentPage() - 1)">
+                        Назад
+                    </button>
+
+                    <span class="page-info">
+                        Страница {{ store.currentPage() }} из {{ totalPages() }}
+                    </span>
+
+                    <button class="page-btn" [disabled]="store.currentPage() === totalPages()"
+                            (click)="loadPage(store.currentPage() + 1)">
+                        Вперед
+                    </button>
+                </div>
+                }
             </div>
             }
         </section>
 
-        @if (isMakePostOpen) {
-        <app-make-post [postToEdit]="selectedPost" (postCreated)="handleSavePost($event)"
+        @if (isMakePostOpen()) {
+        <app-make-post [postToEdit]="selectedPost()" (postCreated)="handleSavePost($event)"
                        (cancelForm)="closeMakePost()">
         </app-make-post>
         }

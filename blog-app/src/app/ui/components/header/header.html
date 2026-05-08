@@ -12,6 +12,11 @@
                 <li>
                     <a class="navigation-menu-link" (click)="scrollToContacts()" style="cursor: pointer;">Контакты</a>
                 </li>
+                <li>
+                    <button class="theme-toggle" (click)="toggleTheme()" title="Сменить тему">
+                        {{ settingsService.settings().theme === 'light' ? '🌙' : '☀️' }}
+                    </button>
+                </li>
             </ul>
         </nav>
     </div>

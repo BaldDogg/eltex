@@ -1,7 +1,9 @@
-import { Component, OnInit, ViewChild, ElementRef, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, signal, inject, computed } from '@angular/core';
 import { BlogPost } from '../../components/blog-post/blog-post';
 import { MakePost } from '../../components/make-post/make-post';
 import { Post } from '../../../models/post';
+import { ARTICLES_SERVICE_TOKEN } from '../../../services/articles/articles-service.token';
+import { ArticlesStoreService } from '../../../services/articles/articles-store.service';
 
 @Component({
     selector: 'app-blog',
@@ -11,127 +13,118 @@ import { Post } from '../../../models/post';
     styleUrl: './blog.scss',
 })
 export class Blog implements OnInit {
-    // массив, где будут лежать данные всех постов (создаем пустой, если нет в памяти)
-    protected posts: Post[] = [];
+    // подключаем сервисы
+    private dataService = inject(ARTICLES_SERVICE_TOKEN);
+    public store = inject(ArticlesStoreService);
 
-    // лоадер 
-    protected isLoading = true;
-
-    protected isMakePostOpen = false;
-
-    // сайд-бар
+    protected isLoading = signal(true);
+    protected isMakePostOpen = signal(false);
     protected isMobileMenuOpen = false;
+    protected selectedPost = signal<Post | null>(null);
 
-    protected selectedPost: Post | null = null;
+    // настройки пагинации
+    protected limit = 7;
+    protected totalPages = computed(() => Math.ceil(this.store.totalCount() / this.limit));
 
     @ViewChild('statsDialog') protected statsDialogRef!: ElementRef<HTMLDialogElement>;
 
-    constructor(private cdr: ChangeDetectorRef) { }
+    constructor() { }
 
-    // функция для загрузки постов из памяти
     ngOnInit(): void {
-        if (typeof window !== 'undefined' && typeof localStorage !== 'undefined') {
-            try {
-                const savedPosts = localStorage.getItem('blogPosts');
-
-                if (savedPosts) {
-                    this.posts = JSON.parse(savedPosts);
-                }
-            } catch (error) {
-                this.posts = [];
-                localStorage.removeItem('blogPosts');
-            }
+        // запрашиваем данные через стор
+        if (!this.store.isLoaded()) {
+            this.loadPage(1);
+        } else {
+            this.isLoading.set(false);
         }
-
-        setTimeout(() => {
-            this.isLoading = false;
-            this.cdr.detectChanges();
-        }, 1000);
     }
 
-    // сайд-бар
-    // сайд-бар в мобильной версии со стрелкой
+    // загрузка конкретной страницы
+    protected loadPage(page: number) {
+        this.isLoading.set(true);
+        this.dataService.getPosts(page, this.limit).subscribe(res => {
+            this.store.setPostsData(res.posts, res.totalCount);
+            this.store.setCurrentPage(page);
+            this.isLoading.set(false);
+        });
+    }
+
     protected toggleMobileMenu() {
         this.isMobileMenuOpen = !this.isMobileMenuOpen;
     }
 
-    // статистика
     protected openStats() {
-        // считаем посты, будущие комментарии (в HTML)
         this.statsDialogRef.nativeElement.showModal();
     }
 
-    // закрытие диалогового окна статистики
     protected closeStats() {
         this.statsDialogRef.nativeElement.close();
     }
 
-    // проверка кликов вне окна, если находит - закрытие окна
     protected onDialogClick(event: MouseEvent) {
         const dialogElement = this.statsDialogRef.nativeElement;
         const rect = dialogElement.getBoundingClientRect();
-
         const clickIsOutside = (
-            event.clientY < rect.top ||
-            event.clientY > rect.bottom ||
-            event.clientX < rect.left ||
-            event.clientX > rect.right
+            event.clientY < rect.top || event.clientY > rect.bottom ||
+            event.clientX < rect.left || event.clientX > rect.right
         );
-
         if (clickIsOutside) {
-            // закрытие сайд-бара
             this.closeStats();
         }
     }
 
-    // добавить статью 
-    // прокрутка до формы создания поста
-    protected openMakePost() {
-        this.selectedPost = null;
-        this.isMakePostOpen = true;
-        this.cdr.detectChanges();
+    private scrollToForm() {
         setTimeout(() => {
             document.getElementById('make-post')?.scrollIntoView({ behavior: "smooth" });
         }, 0);
+    }
+
+    protected openMakePost() {
+        this.selectedPost.set(null);
+        this.isMakePostOpen.set(true);
+        this.scrollToForm();
     }
 
     protected editPost(post: Post) {
-        this.selectedPost = post;
-        this.isMakePostOpen = true;
-        this.cdr.detectChanges();
-        setTimeout(() => {
-            document.getElementById('make-post')?.scrollIntoView({ behavior: "smooth" });
-        }, 0);
+        this.selectedPost.set(post);
+        this.isMakePostOpen.set(true);
+        this.scrollToForm();
     }
 
-    // отмена
     protected closeMakePost() {
-        this.isMakePostOpen = false;
-        this.selectedPost = null;
-        this.cdr.detectChanges();
+        this.isMakePostOpen.set(false);
+        this.selectedPost.set(null);
+        this.scrollToForm();
     }
 
-    // новый пост
     protected handleSavePost(savedPost: Post) {
-        const postIndex = this.posts.findIndex(p => p.id === savedPost.id);
+        this.isLoading.set(true);
+        const currentPage = this.store.currentPage();
+        const isExisting = this.store.posts().some(p => p.id === savedPost.id);
 
-        if (postIndex !== -1) {
-            this.posts[postIndex] = savedPost;
-        } else {
-            // сохраняем данные в массив
-            this.posts.unshift(savedPost);
-        }
+        // сохраняем через сервис
+        const request$ = isExisting
+            ? this.dataService.updatePost(savedPost, currentPage, this.limit)
+            : this.dataService.addPost(savedPost, currentPage, this.limit);
 
-        // записываем массив в localstorage
-        localStorage.setItem('blogPosts', JSON.stringify(this.posts));
-
-        // закрываем форму
-        this.closeMakePost();
+        request$.subscribe(res => {
+            this.store.setPostsData(res.posts, res.totalCount);
+            this.closeMakePost();
+            this.isLoading.set(false);
+        });
     }
 
-    // удалить статью 
     protected deletePost(id: string) {
-        this.posts = this.posts.filter(p => p.id !== id);
-        localStorage.setItem('blogPosts', JSON.stringify(this.posts));
+        this.isLoading.set(true);
+        const currentPage = this.store.currentPage();
+
+        // удаляем через сервис
+        this.dataService.deletePost(id, currentPage, this.limit).subscribe(res => {
+            this.store.setPostsData(res.posts, res.totalCount);
+            if (this.selectedPost()?.id === id) {
+                this.closeMakePost();
+            }
+            this.isLoading.set(false);
+        });
     }
 }

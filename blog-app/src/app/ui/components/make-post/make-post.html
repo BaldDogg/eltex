@@ -1,6 +1,6 @@
 <section class="make-post-section" id="make-post">
     <div class="make-post-container">
-        <h2>{{ postToEdit ? 'Изменить статью' : 'Добавить статью' }}</h2>
+        <h2>{{ formTitle() }}</h2>
 
         <form class="make-post" [formGroup]="postForm" (ngSubmit)="onSubmitPost()">
 
@@ -55,7 +55,7 @@
                     @if (isSaving) {
                     Сохранение...
                     } @else {
-                    {{ postToEdit ? 'Сохранить' : 'Добавить' }}
+                    {{ saveButtonTitle() }}
                     }
                 </button>
                 <button type="button" class="undo-post-button" (click)="closeMakePost()">Отмена</button>

@@ -1,0 +1,13 @@
+<h2 class="line-header education">Образование</h2>
+<article class="education-nstu">
+    <h3>Новосибирский государственный технический университет, 2023-2027</h3>
+    <p>Бакалавриат по специальности "Информатика и вычислительная техника"</p>
+</article>
+<article class="education-courses">
+    <h3>Курсы и сертификации</h3>
+    <ul>
+        @for (course of courses; track course) {
+        <li class="education-courses-list">{{ course }}</li>
+        }
+    </ul>
+</article>
