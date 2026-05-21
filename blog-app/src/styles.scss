@@ -1,17 +1,52 @@
+// Include theming for Angular Material with `mat.theme()`.
+// This Sass mixin will define CSS variables that are used for styling Angular Material
+// components according to the Material 3 design spec.
+// Learn more about theming and how to use it for your application's
+// custom components at https://material.angular.dev/guide/theming
+@use '@angular/material' as mat;
+
+html {
+    height: 100%;
+    @include mat.theme((color: (primary: mat.$azure-palette,
+                tertiary: mat.$blue-palette,
+            ),
+            typography: Roboto,
+            density: 0,
+        ));
+}
+
+body {
+    // Default the application to a light color theme. This can be changed to
+    // `dark` to enable the dark color theme, or to `light dark` to defer to the
+    // user's system settings.
+    color-scheme: light;
+
+    // Set a default background, font and text colors for the application using
+    // Angular Material's system-level CSS variables. Learn more about these
+    // variables at https://material.angular.dev/guide/system-variables
+    background-color: var(--mat-sys-surface);
+    color: var(--mat-sys-on-surface);
+    font: var(--mat-sys-body-medium);
+
+    // Reset the user agent margin.
+    margin: 0;
+    height: 100%;
+}
+
 :root {
     --color-accent: #323747;
-    --color-muted: #68686A;
+    --color-muted: #68686a;
     --color-grey-light: #dcdfe7;
     --color-white: #ffffff;
-    --color-orange: #DB5E31;
-    --color-orange-light: #FEF3EF;
-    --color-green: #61C15C;
-    --color-green-light: #F4FBF4;
+    --color-orange: #db5e31;
+    --color-orange-light: #fef3ef;
+    --color-green: #61c15c;
+    --color-green-light: #f4fbf4;
     --color-green-dark: #468b42;
 }
 
 * {
-    font-family: "Inter", sans-serif;
+    font-family: 'Inter', sans-serif;
     box-sizing: border-box;
 }
 
@@ -27,7 +62,7 @@ body {
 
 body.dark-theme {
     --color-accent: #d1d6e3;
-    --color-muted: #dfdfe1;
+    --color-muted: #a3a3a3;
     --color-grey-light: #404144;
     --color-white: #181818;
     --color-orange: #d45d35;
@@ -89,7 +124,6 @@ a:visited {
 .line-with-text {
     border-bottom: 2px solid var(--color-grey-light);
 }
-
 
 @media (max-width: 800px) {
     body {

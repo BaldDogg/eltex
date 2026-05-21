@@ -1,18 +1,25 @@
 <article class="blog-post">
     <div class="post-actions">
-        <button class="edit-post-button" (click)="onEdit()" title="Редактировать">
-            <img class="edit-post-logo" src="assets/edit-post.png" alt="Редактировать">
+        <button mat-icon-button class="edit-btn" (click)="onEdit()" title="Редактировать">
+            <mat-icon>edit</mat-icon>
         </button>
-        <button class="delete-post-button" (click)="onDelete()" title="Удалить">
-            <img class="delete-post-logo" src="assets/delete-post.png" alt="Удалить">
+
+        <button mat-icon-button class="delete-btn" (click)="onDelete()" title="Удалить">
+            <mat-icon>delete</mat-icon>
         </button>
     </div>
 
     <div class="post">
         <span class="post-theme">{{ post.theme }}</span>
-        <h3 class="post-title" [title]="post.title">{{ post.title }}</h3>
+
+        <h3 class="post-title" [title]="post.title">
+            <a [routerLink]="['/post', post.id]" class="post-link">{{ post.title }}</a>
+        </h3>
+
         <p class="post-time">Опубликовано <time>{{ post.date }}</time></p>
         <p class="post-text">{{ post.text }}</p>
     </div>
-    <img class="blog-image" [src]="post.image || 'assets/kotik-template.jpg'" alt="Картинка статьи">
+
+    <img class="blog-image" [routerLink]="['/post', post.id]" style="cursor: pointer;"
+         [src]="post.image || 'assets/kotik-template.jpg'" alt="Картинка статьи">
 </article>

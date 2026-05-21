@@ -1,26 +1,40 @@
-import { Component, OnInit, ViewChild, ElementRef, signal, inject, computed } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, signal, inject, computed, DestroyRef } from '@angular/core';
 import { BlogPost } from '../../components/blog-post/blog-post';
 import { MakePost } from '../../components/make-post/make-post';
 import { Post } from '../../../models/post';
 import { ARTICLES_SERVICE_TOKEN } from '../../../services/articles/articles-service.token';
 import { ArticlesStoreService } from '../../../services/articles/articles-store.service';
+import { MatIconModule } from '@angular/material/icon';
+import { Title } from '@angular/platform-browser';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'app-blog',
     standalone: true,
-    imports: [BlogPost, MakePost],
+    imports: [BlogPost, MakePost, MatIconModule],
     templateUrl: './blog.html',
     styleUrl: './blog.scss',
 })
 export class Blog implements OnInit {
     // подключаем сервисы
     private dataService = inject(ARTICLES_SERVICE_TOKEN);
-    public store = inject(ArticlesStoreService);
+    private store = inject(ArticlesStoreService);
+    private titleService = inject(Title);
+
+    // для отписок
+    private destroyRef = inject(DestroyRef);
+
+    protected posts = this.store.posts;
+    protected currentPage = this.store.currentPage;
+    protected totalCount = this.store.totalCount;
 
     protected isLoading = signal(true);
     protected isMakePostOpen = signal(false);
     protected isMobileMenuOpen = false;
     protected selectedPost = signal<Post | null>(null);
+
+    // переменные для статистики
+    protected totalComments = 0;
 
     // настройки пагинации
     protected limit = 7;
@@ -31,6 +45,8 @@ export class Blog implements OnInit {
     constructor() { }
 
     ngOnInit(): void {
+        this.titleService.setTitle('Блог');
+
         // запрашиваем данные через стор
         if (!this.store.isLoaded()) {
             this.loadPage(1);
@@ -42,7 +58,7 @@ export class Blog implements OnInit {
     // загрузка конкретной страницы
     protected loadPage(page: number) {
         this.isLoading.set(true);
-        this.dataService.getPosts(page, this.limit).subscribe(res => {
+        this.dataService.getPosts(page, this.limit).pipe(takeUntilDestroyed(this.destroyRef)).subscribe(res => {
             this.store.setPostsData(res.posts, res.totalCount);
             this.store.setCurrentPage(page);
             this.isLoading.set(false);
@@ -54,6 +70,9 @@ export class Blog implements OnInit {
     }
 
     protected openStats() {
+        // считаем комменты при открытии
+        const comments = JSON.parse(localStorage.getItem('blogComments') || '[]');
+        this.totalComments = comments.length;
         this.statsDialogRef.nativeElement.showModal();
     }
 
@@ -107,7 +126,7 @@ export class Blog implements OnInit {
             ? this.dataService.updatePost(savedPost, currentPage, this.limit)
             : this.dataService.addPost(savedPost, currentPage, this.limit);
 
-        request$.subscribe(res => {
+        request$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(res => {
             this.store.setPostsData(res.posts, res.totalCount);
             this.closeMakePost();
             this.isLoading.set(false);
@@ -118,8 +137,20 @@ export class Blog implements OnInit {
         this.isLoading.set(true);
         const currentPage = this.store.currentPage();
 
+        // удаление комментариев поста
+        const existingComments = JSON.parse(localStorage.getItem('blogComments') || '[]');
+        const updatedComments = existingComments.filter((comment: any) => comment.postId !== id);
+        localStorage.setItem('blogComments', JSON.stringify(updatedComments));
+
+        // удаление рейтинга поста
+        const userReactions = JSON.parse(localStorage.getItem('userReactions') || '{}');
+        if (userReactions[id]) {
+            delete userReactions[id];
+            localStorage.setItem('userReactions', JSON.stringify(userReactions));
+        }
+
         // удаляем через сервис
-        this.dataService.deletePost(id, currentPage, this.limit).subscribe(res => {
+        this.dataService.deletePost(id, currentPage, this.limit).pipe(takeUntilDestroyed(this.destroyRef)).subscribe(res => {
             this.store.setPostsData(res.posts, res.totalCount);
             if (this.selectedPost()?.id === id) {
                 this.closeMakePost();

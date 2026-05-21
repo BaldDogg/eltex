@@ -14,7 +14,7 @@ footer {
 :host-context(body.dark-theme) {
     footer {
         background-color: var(--color-white);
-        color: var(--color-text); // поменяла на базовый текст, чтобы читалось (или оставь --color-accent)
+        color: var(--color-text);
 
         h2 {
             color: var(--color-text);
@@ -25,7 +25,7 @@ footer {
         background-color: var(--color-grey-light);
 
         label {
-            color: var(--color-text); // перекрашиваем подписи над инпутами
+            color: var(--color-text);
         }
     }
 }
@@ -81,7 +81,7 @@ footer {
     border-radius: 5px;
     font-family: inherit;
     font-size: 16px;
-    color: var(--color-muted-blue);
+    color: var(--color-muted);
     resize: none;
 
     &::placeholder {
@@ -152,6 +152,14 @@ footer {
 
     .contact-info {
         order: 1;
+    }
+
+    :host-context(body.dark-theme) {
+
+        .email-form {
+            background-color: var(--color-white);
+
+        }
     }
 
 }
