@@ -26,8 +26,12 @@ export class ArticlesService implements IArticlesService {
 
     // нарезка массива для пагинации
     private paginate(posts: Post[], page: number, limit: number): PaginatedPosts {
-        const startIndex = (page - 1) * limit;
-        const endIndex = startIndex + limit;
+        const currentPage = Number(page) || 1;
+        const currentLimit = Number(limit) || 7;
+
+        const startIndex = (currentPage - 1) * currentLimit;
+        const endIndex = startIndex + currentLimit;
+
         return {
             posts: posts.slice(startIndex, endIndex),
             totalCount: posts.length
@@ -65,11 +69,14 @@ export class ArticlesService implements IArticlesService {
         allPosts = allPosts.filter(p => p.id !== id);
         this.saveToStorage(allPosts);
 
-        const totalPages = Math.ceil(allPosts.length / limit);
-        if (page > totalPages && totalPages > 0) {
-            page = totalPages;
+        const currentLimit = Number(limit) || 7;
+        const totalPages = Math.ceil(allPosts.length / currentLimit);
+        let currentPage = Number(page) || 1;
+
+        if (currentPage > totalPages && totalPages > 0) {
+            currentPage = totalPages;
         }
 
-        return of(this.paginate(allPosts, page, limit)).pipe(delay(500));
+        return of(this.paginate(allPosts, currentPage, currentLimit)).pipe(delay(500));
     }
 }
