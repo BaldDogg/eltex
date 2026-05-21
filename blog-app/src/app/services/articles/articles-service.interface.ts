@@ -1,11 +1,6 @@
 import { Observable } from 'rxjs';
 import { Post } from '../../models/post';
-
-// интерфейс ответа с пагинацией
-export interface PaginatedPosts {
-    posts: Post[];
-    totalCount: number;
-}
+import { PaginatedPosts } from './types/paginated-posts.interface';
 
 // интерфейс сервиса статей
 export interface IArticlesService {

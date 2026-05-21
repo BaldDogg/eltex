@@ -114,31 +114,9 @@
     object-position: center;
 }
 
-.delete-post-button,
-.edit-post-button {
-    width: 50px;
-    height: 50px;
-    background: transparent;
-    border: transparent;
-    transition: 0.5s ease;
-    cursor: pointer;
-}
-
 .blog-post:hover {
     .post-actions {
         opacity: 1;
-    }
-}
-
-.delete-post-logo,
-.edit-post-logo {
-    width: 35px;
-    height: 35px;
-    object-fit: contain;
-
-    &:hover {
-        transform: scale(1.1);
-        transition: 0.2s;
     }
 }
 
@@ -148,9 +126,39 @@
     right: 10px;
     display: flex;
     gap: 5px;
-    /* Расстояние между кнопками */
     z-index: 10;
     opacity: 0;
-    /* Прячем обе кнопки по умолчанию */
     transition: 0.5s ease;
+
+    .edit-btn {
+        mat-icon {
+            color: var(--color-green);
+            transition: 0.5s ease;
+        }
+
+        &:hover mat-icon {
+            transform: scale(1.1);
+        }
+    }
+
+    .delete-btn {
+        mat-icon {
+            color: #f44336;
+            transition: 0.5s ease;
+        }
+
+        &:hover mat-icon {
+            transform: scale(1.1);
+        }
+    }
+}
+
+.post-link {
+    text-decoration: none;
+    color: inherit;
+    transition: color 0.3s ease;
+
+    &:hover {
+        color: var(--color-green);
+    }
 }

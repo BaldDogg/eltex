@@ -1,4 +1,4 @@
-import { Component, inject, effect } from '@angular/core';
+import { Component, inject, effect, computed } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { UserSettings } from '../../../services/user-settings/user-settings';
 
@@ -10,7 +10,9 @@ import { UserSettings } from '../../../services/user-settings/user-settings';
     styleUrl: './header.scss',
 })
 export class Header {
-    public settingsService = inject(UserSettings);
+    private settingsService = inject(UserSettings);
+
+    protected changeThemeSymbol = computed(() => this.settingsService.settings().theme === 'light' ? '🌙' : '☀️');
 
     constructor() {
         effect(() => {

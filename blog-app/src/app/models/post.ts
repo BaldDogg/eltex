@@ -5,4 +5,5 @@ export interface Post {
     theme: string;
     text: string;
     date: string;
+    rating?: number;
 }

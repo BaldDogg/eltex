@@ -32,14 +32,19 @@
 
 .aside-logo,
 .close-stats-logo {
-    &:hover {
-        transform: scale(1.1);
-        transition: 0.2s;
-    }
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--color-green);
 
     width: 35px;
     height: 35px;
     object-fit: contain;
+
+    &:hover {
+        transform: scale(1.1);
+        transition: 0.2s;
+    }
 }
 
 .stats-dialog {
@@ -179,11 +184,22 @@
     font-weight: bold;
 }
 
+:host-context(body.dark-theme) {
+    .stats-dialog {
+        background-color: var(--color-white);
+        border-color: var(--color-grey-light);
+    }
+
+    .stat-card {
+        background-color: var(--color-bg-hover);
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    }
+}
+
 //--------------------------------------------------
 // адаптация под мобильные устройства
 
 @media (max-width: 800px) {
-    // blog aside bar
 
     .blog-aside-bar {
         transform: translateY(-50%) translateX(100%);
@@ -212,26 +228,31 @@
         transform: translateY(-50%) translateX(0);
     }
 
-    // post feed
-
     .blog {
         grid-template-columns: 1fr;
+        gap: 20px;
+
+        app-blog-post:first-child {
+            ::ng-deep .blog-post {
+                flex-direction: column;
+                height: auto;
+                gap: 0;
+
+                .blog-image {
+                    order: -1;
+                    height: 200px;
+                    width: 100%;
+                    flex: none;
+                }
+
+                .post {
+                    padding: 20px;
+                }
+            }
+        }
     }
 
-    .blog-post {
-        height: auto;
-        max-height: none;
+    app-blog-post {
+        grid-column: 1 / -1;
     }
-
-    .blog-post:first-child {
-        grid-column: span 1;
-        flex-direction: column;
-        gap: 0;
-    }
-
-    .blog-image {
-        height: 200px;
-        flex: none;
-    }
-
 }

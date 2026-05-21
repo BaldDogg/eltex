@@ -1,12 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { delay } from 'rxjs/operators';
-import { IArticlesService, PaginatedPosts } from './articles-service.interface';
+import { IArticlesService } from './articles-service.interface';
 import { Post } from '../../models/post';
+import { PaginatedPosts } from './types/paginated-posts.interface';
 
-@Injectable({
-    providedIn: 'root'
-})
+@Injectable()
 export class ArticlesService implements IArticlesService {
     // ключ для localstorage
     private readonly STORAGE_KEY = 'blogPosts';

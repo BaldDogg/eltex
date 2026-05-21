@@ -26,3 +26,21 @@
 .instrument-logo {
     width: 60px;
 }
+
+@media (max-width: 800px) {
+    .instruments {
+        flex-direction: column;
+        gap: 30px;
+    }
+
+    .instruments-header,
+    .instruments-list {
+        flex: none;
+        padding: 0;
+    }
+
+    .instrument {
+        margin: 0 0 15px 0;
+        padding-bottom: 10px;
+    }
+}

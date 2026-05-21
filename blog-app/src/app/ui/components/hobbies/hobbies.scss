@@ -76,6 +76,18 @@
     color: var(--color-white);
 }
 
+:host-context(body.dark-theme) {
+    .hobby-card .hobby-overlay {
+        background-color: var(--color-white);
+        color: var(--color-accent);
+
+        .hobby-title,
+        .hobby-text {
+            color: var(--color-accent);
+        }
+    }
+}
+
 @media (max-width: 800px) {
 
     .instruments {
@@ -86,9 +98,6 @@
         margin: 0;
         padding: 0;
     }
-}
-
-@media (max-width: 800px) {
 
     .hobby {
         grid-template-columns: repeat(2, 1fr);

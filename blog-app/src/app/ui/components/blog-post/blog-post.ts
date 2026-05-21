@@ -1,11 +1,14 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Post } from '../../../models/post';
+import { RouterLink } from '@angular/router';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
     selector: 'app-blog-post',
     standalone: true,
-    imports: [CommonModule],
+    imports: [CommonModule, RouterLink, MatIconModule, MatButtonModule],
     templateUrl: './blog-post.html',
     styleUrl: './blog-post.scss'
 })
