@@ -62,11 +62,15 @@ export class PostDetail implements OnInit {
                 this.store.isLoading.set(true);
                 const postId = params.get('id');
 
-                if (!postId) return of(null);
+                if (!postId) {
+                    this.store.isLoading.set(false);
+                    return of(null);
+                }
 
                 return this.dataService.getPostById(postId).pipe(
                     catchError(() => {
                         this.store.setError('Упс! Статья не найдена или была удалена.');
+                        this.store.isLoading.set(false);
                         return of(null);
                     })
                 );
@@ -83,6 +87,8 @@ export class PostDetail implements OnInit {
                 data.comments.forEach(c => {
                     this.userCommentReactions[c.id] = allUserReactions[c.id] || 0;
                 });
+
+                this.store.isLoading.set(false);
             }
         });
     }
