@@ -13,16 +13,18 @@
 
             <div>
                 <label for="make-post-theme">Тема</label>
-                <select class="make-post-theme" formControlName="theme">
-                    <option value="Наука">Наука</option>
-                    <option value="Мистика">Мистика</option>
-                    <option value="Тайны современности">Тайны современности</option>
-                    <option value="other">Другое (введите тему)</option>
-                </select>
+                <mat-form-field class="make-post-theme-field" appearance="outline">
+                    <input matInput type="text" id="make-post-theme" placeholder="Выберите тему или введите свою"
+                           formControlName="theme" [matAutocomplete]="auto">
 
-                @if (postForm.get('theme')?.value === 'other') {
-                <input class="make-post-theme-custom" type="text" placeholder="Своя тема" formControlName="themeCustom">
-                }
+                    <mat-autocomplete #auto="matAutocomplete">
+                        @for (category of filteredCategories | async; track category.id) {
+                        <mat-option [value]="category.name">
+                            {{category.name}}
+                        </mat-option>
+                        }
+                    </mat-autocomplete>
+                </mat-form-field>
             </div>
 
             <div>

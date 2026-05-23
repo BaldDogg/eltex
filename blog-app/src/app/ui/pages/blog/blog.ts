@@ -7,6 +7,9 @@ import { ArticlesStoreService } from '../../../services/articles/articles-store.
 import { MatIconModule } from '@angular/material/icon';
 import { Title } from '@angular/platform-browser';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmDialogComponent } from '../../components/confirm-dialog/confirm-dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
     selector: 'app-blog',
@@ -20,6 +23,8 @@ export class Blog implements OnInit {
     private dataService = inject(ARTICLES_SERVICE_TOKEN);
     private store = inject(ArticlesStoreService);
     private titleService = inject(Title);
+    private dialog = inject(MatDialog);
+    private snackBar = inject(MatSnackBar);
 
     // для отписок
     private destroyRef = inject(DestroyRef);
@@ -126,36 +131,82 @@ export class Blog implements OnInit {
             ? this.dataService.updatePost(savedPost, currentPage, this.limit)
             : this.dataService.addPost(savedPost, currentPage, this.limit);
 
-        request$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(res => {
-            this.store.setPostsData(res.posts, res.totalCount);
-            this.closeMakePost();
-            this.isLoading.set(false);
+        request$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe({
+            next: (res) => {
+                this.store.setPostsData(res.posts, res.totalCount);
+                this.closeMakePost();
+                this.isLoading.set(false);
+
+                this.snackBar.open('Статья успешно сохранена!', 'Закрыть', {
+                    duration: 3000,
+                    panelClass: ['success-snackbar']
+                });
+            },
+            error: (err) => {
+                this.isLoading.set(false);
+
+                this.snackBar.open('Ошибка! Возможно, статья с таким названием уже существует.', 'Закрыть', {
+                    duration: 5000,
+                    panelClass: ['error-snackbar']
+                });
+            }
         });
     }
 
     protected deletePost(id: string) {
-        this.isLoading.set(true);
-        const currentPage = this.store.currentPage();
-
-        // удаление комментариев поста
-        const existingComments = JSON.parse(localStorage.getItem('blogComments') || '[]');
-        const updatedComments = existingComments.filter((comment: any) => comment.postId !== id);
-        localStorage.setItem('blogComments', JSON.stringify(updatedComments));
-
-        // удаление рейтинга поста
-        const userReactions = JSON.parse(localStorage.getItem('userReactions') || '{}');
-        if (userReactions[id]) {
-            delete userReactions[id];
-            localStorage.setItem('userReactions', JSON.stringify(userReactions));
-        }
-
-        // удаляем через сервис
-        this.dataService.deletePost(id, currentPage, this.limit).pipe(takeUntilDestroyed(this.destroyRef)).subscribe(res => {
-            this.store.setPostsData(res.posts, res.totalCount);
-            if (this.selectedPost()?.id === id) {
-                this.closeMakePost();
+        // диалог подтверждения
+        const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+            width: '400px',
+            autoFocus: false,
+            data: {
+                title: 'Удаление статьи',
+                message: 'Вы уверены, что хотите удалить эту статью? Это действие нельзя отменить.',
+                confirmText: 'Удалить'
             }
-            this.isLoading.set(false);
+        });
+
+        // ждем ответ пользователя
+        dialogRef.afterClosed().subscribe(result => {
+            // нажатие "отмена"/закрытие окна
+            if (result === true) {
+                this.isLoading.set(true);
+                const currentPage = this.store.currentPage();
+
+                // удаление комментариев поста
+                const existingComments = JSON.parse(localStorage.getItem('blogComments') || '[]');
+                const updatedComments = existingComments.filter((comment: any) => comment.postId !== id);
+                localStorage.setItem('blogComments', JSON.stringify(updatedComments));
+
+                // удаление рейтинга поста
+                const userReactions = JSON.parse(localStorage.getItem('userReactions') || '{}');
+                if (userReactions[id]) {
+                    delete userReactions[id];
+                    localStorage.setItem('userReactions', JSON.stringify(userReactions));
+                }
+
+                // удаление через сервис
+                this.dataService.deletePost(id, currentPage, this.limit).pipe(takeUntilDestroyed(this.destroyRef)).subscribe({
+                    next: (res) => {
+                        this.store.setPostsData(res.posts, res.totalCount);
+                        if (this.selectedPost()?.id === id) {
+                            this.closeMakePost();
+                        }
+                        this.isLoading.set(false);
+
+                        this.snackBar.open('Статья успешно удалена!', 'Закрыть', {
+                            duration: 3000,
+                            panelClass: ['success-snackbar']
+                        });
+                    },
+                    error: () => {
+                        this.isLoading.set(false);
+                        this.snackBar.open('Ошибка при удалении статьи.', 'Закрыть', {
+                            duration: 5000,
+                            panelClass: ['error-snackbar']
+                        });
+                    }
+                });
+            }
         });
     }
 }
