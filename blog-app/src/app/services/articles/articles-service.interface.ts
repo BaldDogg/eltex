@@ -1,6 +1,7 @@
 import { Observable } from 'rxjs';
 import { Post } from '../../models/post';
 import { PaginatedPosts } from './types/paginated-posts.interface';
+import { CategoryEntity } from './article-backend.interfaces';
 
 // интерфейс сервиса статей
 export interface IArticlesService {
@@ -8,4 +9,5 @@ export interface IArticlesService {
     addPost(post: Post, page: number, limit: number): Observable<PaginatedPosts>;
     updatePost(post: Post, page: number, limit: number): Observable<PaginatedPosts>;
     deletePost(id: string, page: number, limit: number): Observable<PaginatedPosts>;
+    getCategories(): Observable<CategoryEntity[]>;
 }

@@ -1,0 +1,59 @@
+.dialog-text {
+    font-size: 16px;
+    color: var(--color-muted);
+    margin: 0;
+    padding-top: 5px;
+}
+
+.dialog-actions {
+    padding-bottom: 20px;
+    padding-right: 20px;
+}
+
+.cancel-btn {
+    color: var(--color-green-dark) !important;
+    font-size: 16px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, color 0.3s ease !important;
+
+    &:hover {
+        background-color: var(--color-green) !important;
+        color: var(--color-white) !important;
+    }
+}
+
+.confirm-btn {
+    background-color: var(--color-green) !important;
+    color: var(--color-white) !important;
+    font-size: 16px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease !important;
+
+    &:hover {
+        background-color: var(--color-green-dark) !important;
+    }
+}
+
+::ng-deep .dark-theme {
+    .mdc-dialog__surface {
+        background-color: var(--color-white) !important;
+    }
+
+    .mat-mdc-dialog-title {
+        color: var(--color-accent) !important;
+    }
+
+    .dialog-text {
+        color: var(--color-muted) !important;
+    }
+
+    .cancel-btn {
+        color: var(--color-green) !important;
+        background-color: var(--color-white) !important;
+
+        &:hover {
+            background-color: var(--color-green) !important;
+            color: var(--color-white) !important;
+        }
+    }
+}

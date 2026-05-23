@@ -1,15 +1,38 @@
-import { Component, Output, EventEmitter, input, computed, effect } from '@angular/core';
+import { Component, Output, EventEmitter, input, computed, effect, OnInit, inject } from '@angular/core';
 import { ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
+import { Observable } from 'rxjs';
+import { map, startWith } from 'rxjs/operators';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { AsyncPipe } from '@angular/common';
+import { MatDialog } from '@angular/material/dialog';
+
 import { Post } from '../../../models/post';
+import { ARTICLES_SERVICE_TOKEN } from '../../../services/articles/articles-service.token';
+import { CategoryEntity } from '../../../services/articles/article-backend.interfaces';
+import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog';
 
 @Component({
     selector: 'app-make-post',
     standalone: true,
-    imports: [ReactiveFormsModule],
+    imports: [
+        ReactiveFormsModule,
+        MatAutocompleteModule,
+        MatInputModule,
+        MatFormFieldModule,
+        AsyncPipe
+    ],
     templateUrl: './make-post.html',
     styleUrl: './make-post.scss'
 })
-export class MakePost {
+export class MakePost implements OnInit {
+    private dataService = inject(ARTICLES_SERVICE_TOKEN);
+    private dialog = inject(MatDialog);
+
+    public categories: CategoryEntity[] = [];
+    public filteredCategories!: Observable<CategoryEntity[]>;
+
     // редактировать, удалить пост
     postToEdit = input<Post | null>(null);
 
@@ -28,9 +51,8 @@ export class MakePost {
     protected postForm = new FormGroup({
         title: new FormControl('', [Validators.required, Validators.minLength(25)]),
         text: new FormControl('', [Validators.required]),
-        theme: new FormControl('Наука'),
-        themeCustom: new FormControl(''),
-        image: new FormControl('assets/kotik-template.jpg')
+        theme: new FormControl(''),
+        image: new FormControl<string | File>('assets/kotik-template.jpg')
     });
 
     protected selectedFileName = 'Загрузить картинку';
@@ -40,20 +62,32 @@ export class MakePost {
         effect(() => {
             const post = this.postToEdit();
             if (post) {
-                const defaultThemes = ['Наука', 'Мистика', 'Тайны современности'];
-                const isCustomTheme = !defaultThemes.includes(post.theme);
-
                 this.postForm.patchValue({
                     title: post.title,
                     text: post.text,
-                    theme: isCustomTheme ? 'other' : post.theme,
-                    themeCustom: isCustomTheme ? post.theme : '',
+                    theme: post.theme,
                     image: post.image
                 });
             } else {
-                this.postForm.reset({ theme: 'Наука', image: 'assets/kotik-template.jpg' });
+                this.postForm.reset({ theme: '', image: 'assets/kotik-template.jpg' });
             }
         });
+    }
+
+    ngOnInit(): void {
+        this.dataService.getCategories().subscribe(cats => {
+            this.categories = cats;
+        });
+
+        this.filteredCategories = this.postForm.get('theme')!.valueChanges.pipe(
+            startWith(''),
+            map(value => this._filter(value || ''))
+        );
+    }
+
+    private _filter(value: string): CategoryEntity[] {
+        const filterValue = value.toLowerCase();
+        return this.categories.filter(cat => cat.name.toLowerCase().includes(filterValue));
     }
 
     // отображение имени загруженного изображения
@@ -62,15 +96,8 @@ export class MakePost {
         const file = event.target.files[0];
         if (file) {
             this.selectedFileName = `Выбран файл: ${file.name}`;
-
-            // читаем картинку как текст
-            const reader = new FileReader();
-            reader.onload = (e: any) => {
-                this.postForm.get('image')?.setValue(e.target.result);
-            };
-            reader.readAsDataURL(file);
+            this.postForm.get('image')?.setValue(file);
         } else {
-            // если картинки нет, используем заглушку
             this.selectedFileName = 'Загрузить картинку';
             this.postForm.get('image')?.setValue('assets/kotik-template.jpg');
         }
@@ -90,13 +117,6 @@ export class MakePost {
         // задержка в 1 секунду
         setTimeout(() => {
             const formValues = this.postForm.getRawValue();
-
-            // выбор "другое" в темах 
-            let finalTheme = formValues.theme;
-            if (formValues.theme === 'other') {
-                finalTheme = formValues.themeCustom;
-            }
-
             const currentPost = this.postToEdit();
 
             const newPost: Post = {
@@ -104,26 +124,41 @@ export class MakePost {
                 id: currentPost ? currentPost.id : crypto.randomUUID(),
                 title: formValues.title || '',
                 text: formValues.text || '',
-                theme: finalTheme || 'Наука',
-                image: formValues.image || 'assets/kotik-template.jpg',
+                theme: formValues.theme || '',
+                image: formValues.image as any,
                 date: currentPost ? currentPost.date : new Date().toLocaleDateString('ru-RU')
             };
 
             this.postCreated.emit(newPost);
 
             // очищаем форму, потом убираем
-            this.postForm.reset({ theme: 'Наука', image: 'assets/kotik-template.jpg' });
+            this.postForm.reset({ theme: '', image: 'assets/kotik-template.jpg' });
             this.selectedFileName = 'Загрузить картинку';
 
             // разблокировка
             this.isSaving = false;
-
-            // обновляем экран в этом компоненте
         }, 1000);
     }
 
     // отмена
     protected closeMakePost() {
-        this.cancelForm.emit();
+        if (this.postForm.dirty) {
+            const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+                width: '400px',
+                data: {
+                    title: 'Отменить изменения?',
+                    message: 'Вы внесли изменения в статью. Уверены, что хотите выйти без сохранения?',
+                    confirmText: 'Да, выйти'
+                }
+            });
+
+            dialogRef.afterClosed().subscribe(result => {
+                if (result === true) {
+                    this.cancelForm.emit();
+                }
+            });
+        } else {
+            this.cancelForm.emit();
+        }
     }
 }

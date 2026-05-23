@@ -4,11 +4,16 @@ import { delay } from 'rxjs/operators';
 import { IArticlesService } from './articles-service.interface';
 import { Post } from '../../models/post';
 import { PaginatedPosts } from './types/paginated-posts.interface';
+import { CategoryEntity } from './article-backend.interfaces';
 
 @Injectable()
 export class ArticlesService implements IArticlesService {
     // ключ для localstorage
     private readonly STORAGE_KEY = 'blogPosts';
+
+    public getCategories(): Observable<CategoryEntity[]> {
+        return of([]);
+    }
 
     // получение всех постов из памяти
     private getAllFromStorage(): Post[] {

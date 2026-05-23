@@ -1,51 +1,55 @@
-import { Injectable } from '@angular/core';
-import { Observable, of, throwError } from 'rxjs';
-import { delay } from 'rxjs/operators';
+import { Injectable, inject } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable, of, forkJoin, throwError } from 'rxjs';
+import { delay, map, switchMap, catchError } from 'rxjs/operators';
 import { Post } from '../../models/post';
 import { PostComment } from '../articles/types/post-comment.interface';
+import { ArticleMapperService } from '../articles/article-mapper.service';
+import { ArticleEntity, CategoryEntity } from '../articles/article-backend.interfaces';
 
 @Injectable({
     providedIn: 'root'
 })
 export class PostDetailService {
-    private readonly POSTS_KEY = 'blogPosts';
+    private http = inject(HttpClient);
+    private mapper = inject(ArticleMapperService);
+
+    private readonly apiUrl = '/api/articles';
+    private readonly categoriesUrl = '/api/categories';
     private readonly COMMENTS_KEY = 'blogComments';
 
     public getPostById(id: string): Observable<{ post: Post, comments: PostComment[] }> {
-        const posts: Post[] = JSON.parse(localStorage.getItem(this.POSTS_KEY) || '[]');
-        const post = posts.find(p => p.id === id);
+        const post$ = this.http.get<ArticleEntity>(`${this.apiUrl}/${id}`).pipe(
+            switchMap(article => {
+                return this.http.get<CategoryEntity[]>(this.categoriesUrl).pipe(
+                    map(categories => {
+                        const post = this.mapper.mapToPost(article);
+                        const category = categories.find(c => c.id === article.categoryId);
+                        post.theme = category ? category.name : 'Без категории';
+                        return post;
+                    })
+                );
+            }),
+            catchError(() => throwError(() => new Error('Пост не найден')))
+        );
 
-        if (!post) {
-            return throwError(() => new Error('Пост не найден')).pipe(delay(500));
-        }
-
-        const allComments: PostComment[] = JSON.parse(localStorage.getItem(this.COMMENTS_KEY) || '[]');
-        const postComments = allComments.filter(c => c.postId === id);
-
-        return of({ post, comments: postComments }).pipe(delay(500));
+        const comments$ = of(JSON.parse(localStorage.getItem(this.COMMENTS_KEY) || '[]').filter((c: any) => c.postId === id));
+        return forkJoin({ post: post$, comments: comments$ });
     }
 
     // добавление комментария
     public addComment(comment: PostComment): Observable<PostComment[]> {
         const allComments: PostComment[] = JSON.parse(localStorage.getItem(this.COMMENTS_KEY) || '[]');
-        allComments.unshift(comment); // добавляем в начало
+        allComments.unshift(comment);
         localStorage.setItem(this.COMMENTS_KEY, JSON.stringify(allComments));
 
-        // возвращаем обновленный список комментариев именно для этого поста
         const postComments = allComments.filter(c => c.postId === comment.postId);
         return of(postComments).pipe(delay(300));
     }
 
-    // изменение рейтинга поста
+    // изменение рейтинга поста 
     public updatePostRating(postId: string, newRating: number): Observable<void> {
-        const posts: Post[] = JSON.parse(localStorage.getItem(this.POSTS_KEY) || '[]');
-        const postIndex = posts.findIndex(p => p.id === postId);
-
-        if (postIndex !== -1) {
-            posts[postIndex] = { ...posts[postIndex], rating: newRating };
-            localStorage.setItem(this.POSTS_KEY, JSON.stringify(posts));
-        }
-        return of(undefined).pipe(delay(200));
+        return this.http.patch<void>(`${this.apiUrl}/${postId}`, { rating: newRating });
     }
 
     // изменение рейтинга комментария
