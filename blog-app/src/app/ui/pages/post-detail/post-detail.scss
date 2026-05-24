@@ -30,16 +30,6 @@
     }
 }
 
-// кастомные ошибки
-.custom-error {
-    color: #f44336;
-    font-size: 12px;
-    margin-bottom: 4px;
-    margin-left: 15px;
-    display: block;
-    font-weight: 500;
-}
-
 .error-message {
     text-align: center;
     padding: 50px;
@@ -131,50 +121,10 @@
     }
 }
 
-.comment-form-card {
-    margin-bottom: 40px;
-
-    .comment-form {
-        display: flex;
-        flex-direction: column;
-        margin-top: 15px;
-    }
-
-    .full-width {
-        width: 100%;
-    }
-}
-
 .comments-list {
     display: flex;
     flex-direction: column;
     gap: 20px;
-}
-
-.comment-card {
-    .comment-avatar {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background-color: var(--color-white);
-
-        mat-icon {
-            font-size: 40px;
-            width: 40px;
-            height: 40px;
-            color: var(--color-green);
-        }
-    }
-
-    .comment-text {
-        font-size: 16px;
-        margin-top: 10px;
-        color: var(--color-muted);
-    }
-
-    .comment-actions {
-        padding-left: 16px;
-    }
 }
 
 .no-comments {
@@ -213,80 +163,6 @@
     }
 }
 
-::ng-deep .post-detail-page {
-
-    mat-card.mat-mdc-card {
-        background-color: var(--color-white);
-        border: 1px solid var(--color-grey-light);
-        box-shadow: none;
-
-        .mat-mdc-card-title,
-        .mat-mdc-card-subtitle {
-            color: var(--color-accent);
-        }
-    }
-
-    .comment-form .mat-mdc-button,
-    .comment-form .mat-mdc-raised-button {
-        background-color: var(--color-green);
-        color: var(--color-white);
-
-        .mdc-button__label {
-            color: var(--color-white);
-        }
-    }
-
-    mat-form-field.mat-mdc-form-field {
-
-        .mdc-text-field--outlined {
-
-            &:not(.mdc-text-field--invalid) {
-
-                .mdc-notched-outline__leading,
-                .mdc-notched-outline__notch,
-                .mdc-notched-outline__trailing {
-                    border-color: var(--color-grey-light);
-                }
-
-                .mdc-floating-label,
-                .mat-mdc-form-field-label {
-                    color: var(--color-muted);
-                }
-
-                &:hover {
-
-                    .mdc-notched-outline__leading,
-                    .mdc-notched-outline__notch,
-                    .mdc-notched-outline__trailing {
-                        border-color: var(--color-accent);
-                    }
-                }
-
-                &.mdc-text-field--focused {
-
-                    .mdc-notched-outline__leading,
-                    .mdc-notched-outline__notch,
-                    .mdc-notched-outline__trailing {
-                        border-color: var(--color-green);
-                        border-width: 2px;
-                    }
-
-                    .mdc-floating-label,
-                    .mat-mdc-form-field-label {
-                        color: var(--color-green);
-                    }
-                }
-            }
-
-            .mat-mdc-input-element,
-            .mdc-text-field__input {
-                color: var(--color-accent);
-                caret-color: var(--color-green);
-            }
-        }
-    }
-}
-
 // темная тема
 :host-context(body.dark-theme) {
 
@@ -298,29 +174,12 @@
         color: var(--color-accent);
     }
 
-    .full-post .post-content,
-    .comment-card .comment-text {
+    .full-post .post-content {
         color: var(--color-muted);
     }
 
     .rating-section {
         border-color: var(--color-grey-light);
-    }
-
-    ::ng-deep .post-detail-page {
-        mat-form-field.mat-mdc-form-field {
-            .mdc-text-field--outlined:not(.mdc-text-field--invalid) {
-
-                &:hover {
-
-                    .mdc-notched-outline__leading,
-                    .mdc-notched-outline__notch,
-                    .mdc-notched-outline__trailing {
-                        border-color: var(--color-green);
-                    }
-                }
-            }
-        }
     }
 }
 

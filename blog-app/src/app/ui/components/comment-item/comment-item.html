@@ -1,0 +1,27 @@
+<mat-card class="comment-card">
+    <mat-card-header>
+        <div mat-card-avatar class="comment-avatar">
+            <mat-icon>account_circle</mat-icon>
+        </div>
+        <mat-card-title>{{ comment.author }}</mat-card-title>
+        <mat-card-subtitle>{{ comment.date | date:'dd.MM.yyyy HH:mm' }}</mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content>
+        <p class="comment-text">{{ comment.text }}</p>
+    </mat-card-content>
+
+    <mat-card-actions class="comment-actions">
+        <button mat-icon-button [style.color]="userReaction === 1 ? 'var(--color-green)' : 'var(--color-muted)'"
+                (click)="changeRating(1)">
+            <mat-icon>thumb_up</mat-icon>
+        </button>
+        <span class="rating-score" [class.positive]="comment.rating > 0" [class.negative]="comment.rating < 0">
+            {{ comment.rating }}
+        </span>
+        <button mat-icon-button [style.color]="userReaction === -1 ? '#f44336' : 'var(--color-muted)'"
+                (click)="changeRating(-1)">
+            <mat-icon>thumb_down</mat-icon>
+        </button>
+    </mat-card-actions>
+</mat-card>

@@ -2,9 +2,7 @@ import { Injectable, signal } from '@angular/core';
 import { Post } from '../../models/post';
 import { PostComment } from '../articles/types/post-comment.interface';
 
-@Injectable({
-    providedIn: 'root'
-})
+@Injectable()
 export class PostDetailStore {
     // сигналы для хранения состояния
     public post = signal<Post | null>(null);

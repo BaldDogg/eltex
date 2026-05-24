@@ -1,0 +1,66 @@
+.comment-card {
+    .comment-avatar {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: var(--color-white);
+
+        mat-icon {
+            font-size: 40px;
+            width: 40px;
+            height: 40px;
+            color: var(--color-green);
+        }
+    }
+
+    .comment-text {
+        font-size: 16px;
+        margin-top: 10px;
+        color: var(--color-muted);
+    }
+
+    .comment-actions {
+        padding-left: 16px;
+    }
+}
+
+// рейтинг комментария
+.rating-score {
+    font-size: 18px;
+    font-weight: bold;
+    min-width: 30px;
+    text-align: center;
+    color: var(--color-accent);
+
+    &.positive {
+        color: var(--color-green);
+    }
+
+    &.negative {
+        color: #f44336;
+    }
+}
+
+::ng-deep .post-detail-page {
+    .comment-card.mat-mdc-card {
+        background-color: var(--color-white);
+        border: 1px solid var(--color-grey-light);
+        box-shadow: none;
+
+        .mat-mdc-card-title,
+        .mat-mdc-card-subtitle {
+            color: var(--color-accent);
+        }
+    }
+}
+
+// темная тема
+:host-context(body.dark-theme) {
+    .comment-card .comment-text {
+        color: var(--color-muted);
+    }
+
+    .rating-score:not(.positive):not(.negative) {
+        color: var(--color-accent);
+    }
+}

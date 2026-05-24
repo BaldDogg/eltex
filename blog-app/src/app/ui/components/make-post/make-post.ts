@@ -120,8 +120,8 @@ export class MakePost implements OnInit {
             const currentPost = this.postToEdit();
 
             const newPost: Post = {
-                // создаем id, чтобы потом удалять по нему посты
-                id: currentPost ? currentPost.id : crypto.randomUUID(),
+                // создаем id, чтобы потом удалять по нему посты (поменяла для безопасного подключения)
+                id: currentPost ? currentPost.id : Date.now().toString() + Math.random().toString(36).substring(2, 9),
                 title: formValues.title || '',
                 text: formValues.text || '',
                 theme: formValues.theme || '',
