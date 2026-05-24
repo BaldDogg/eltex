@@ -1,0 +1,29 @@
+<mat-card class="comment-form-card">
+    <mat-card-header>
+        <mat-card-title>Оставить комментарий</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        <form [formGroup]="commentForm" (ngSubmit)="submitComment()" class="comment-form">
+            @if (commentForm.get('author')?.hasError('required') && commentForm.get('author')?.touched) {
+            <span class="custom-error">Имя обязательно</span>
+            }
+            <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Ваше имя</mat-label>
+                <input matInput formControlName="author" placeholder="Например, Иван">
+            </mat-form-field>
+
+            @if (commentForm.get('text')?.hasError('required') && commentForm.get('text')?.touched) {
+            <span class="custom-error">Текст комментария обязателен</span>
+            }
+            <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Текст комментария</mat-label>
+                <textarea matInput formControlName="text" rows="3" placeholder="Что вы думаете об этом?"></textarea>
+            </mat-form-field>
+
+            <button mat-raised-button style="background-color: var(--color-green); color: white;" type="submit"
+                    [disabled]="commentForm.invalid">
+                Отправить
+            </button>
+        </form>
+    </mat-card-content>
+</mat-card>

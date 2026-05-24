@@ -1,12 +1,13 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { forkJoin, Observable, of } from 'rxjs';
-import { map, switchMap } from 'rxjs/operators';
+import { forkJoin, Observable, of, throwError } from 'rxjs';
+import { map, switchMap, catchError } from 'rxjs/operators';
 import { IArticlesService } from './articles-service.interface';
 import { Post } from '../../models/post';
 import { PaginatedPosts } from './types/paginated-posts.interface';
 import { ArticleMapperService } from './article-mapper.service';
 import { ArticleEntity, CategoryEntity } from './article-backend.interfaces';
+import { ArticlesStoreService } from './articles-store.service';
 
 interface BackendPaginatedResponse {
     items: ArticleEntity[];
@@ -22,33 +23,54 @@ export class HttpArticlesService implements IArticlesService {
 
     private apiUrl = '/api/articles';
     private categoriesUrl = '/api/categories';
+    private readonly POSTS_KEY = 'blogPosts';
 
     // получение всех категорий
     public getCategories(): Observable<CategoryEntity[]> {
-        return this.http.get<CategoryEntity[]>(this.categoriesUrl);
+        const isGithubPages = window.location.hostname.includes('github.io');
+        if (isGithubPages) return of([]);
+
+        return this.http.get<CategoryEntity[]>(this.categoriesUrl).pipe(
+            catchError(() => of([]))
+        );
     }
 
     // поиск или создание категории
     private getOrCreateCategory(categoryName: string): Observable<string> {
         if (!categoryName) categoryName = 'Без категории';
 
+        const isGithubPages = window.location.hostname.includes('github.io');
+        if (isGithubPages) return of('cat-1');
+
         return this.http.get<CategoryEntity[]>(this.categoriesUrl).pipe(
+            catchError(() => of([])),
             switchMap(categories => {
                 const existingCategory = categories.find(c => c.name === categoryName);
-
                 if (existingCategory) {
                     return of(existingCategory.id);
                 } else {
                     return this.http.post<CategoryEntity>(this.categoriesUrl, { name: categoryName }).pipe(
-                        map(newCategory => newCategory.id)
+                        map(newCategory => newCategory.id),
+                        catchError(() => of('cat-1'))
                     );
                 }
             })
         );
     }
 
-    // получение списка постов с подменой id категории на имя
+    // получение списка постов
     public getPosts(page: number, limit: number): Observable<PaginatedPosts> {
+        const isGithubPages = window.location.hostname.includes('github.io');
+
+        if (isGithubPages) {
+            const allPosts: Post[] = JSON.parse(localStorage.getItem(this.POSTS_KEY) || '[]');
+            const startIndex = (page - 1) * limit;
+            return of({
+                posts: allPosts.slice(startIndex, startIndex + limit),
+                totalCount: allPosts.length
+            });
+        }
+
         const params = new HttpParams()
             .set('page', page.toString())
             .set('limit', limit.toString());
@@ -65,7 +87,16 @@ export class HttpArticlesService implements IArticlesService {
                     return post;
                 }),
                 totalCount: response.total
-            }))
+            })),
+            // если бэкенда нет
+            catchError(() => {
+                const allPosts: Post[] = JSON.parse(localStorage.getItem(this.POSTS_KEY) || '[]');
+                const startIndex = (page - 1) * limit;
+                return of({
+                    posts: allPosts.slice(startIndex, startIndex + limit),
+                    totalCount: allPosts.length
+                });
+            })
         );
     }
 
@@ -77,12 +108,14 @@ export class HttpArticlesService implements IArticlesService {
                 formData.append('title', post.title);
                 formData.append('content', post.text);
                 formData.append('categoryId', categoryId);
-
-                if ((post.image as any) instanceof File) {
-                    formData.append('image', post.image as any);
-                }
-
+                if ((post.image as any) instanceof File) formData.append('image', post.image as any);
                 return this.http.post<ArticleEntity>(this.apiUrl, formData);
+            }),
+            catchError(() => {
+                const allPosts: Post[] = JSON.parse(localStorage.getItem(this.POSTS_KEY) || '[]');
+                allPosts.unshift(post);
+                localStorage.setItem(this.POSTS_KEY, JSON.stringify(allPosts));
+                return of(null);
             }),
             switchMap(() => this.getPosts(page, limit))
         );
@@ -96,12 +129,15 @@ export class HttpArticlesService implements IArticlesService {
                 formData.append('title', post.title);
                 formData.append('content', post.text);
                 formData.append('categoryId', categoryId);
-
-                if ((post.image as any) instanceof File) {
-                    formData.append('image', post.image as any);
-                }
-
+                if ((post.image as any) instanceof File) formData.append('image', post.image as any);
                 return this.http.patch<ArticleEntity>(`${this.apiUrl}/${post.id}`, formData);
+            }),
+            catchError(() => {
+                const allPosts: Post[] = JSON.parse(localStorage.getItem(this.POSTS_KEY) || '[]');
+                const index = allPosts.findIndex(p => p.id === post.id);
+                if (index !== -1) allPosts[index] = post;
+                localStorage.setItem(this.POSTS_KEY, JSON.stringify(allPosts));
+                return of(null);
             }),
             switchMap(() => this.getPosts(page, limit))
         );
@@ -110,6 +146,12 @@ export class HttpArticlesService implements IArticlesService {
     // удаление поста
     public deletePost(id: string, page: number, limit: number): Observable<PaginatedPosts> {
         return this.http.delete(`${this.apiUrl}/${id}`).pipe(
+            catchError(() => {
+                const allPosts: Post[] = JSON.parse(localStorage.getItem(this.POSTS_KEY) || '[]');
+                const filtered = allPosts.filter(p => p.id !== id);
+                localStorage.setItem(this.POSTS_KEY, JSON.stringify(filtered));
+                return of(null);
+            }),
             switchMap(() => this.getPosts(page, limit))
         );
     }

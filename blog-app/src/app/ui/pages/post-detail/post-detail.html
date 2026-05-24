@@ -46,70 +46,13 @@
     <section class="comments-section">
         <h2>Комментарии ({{ comments().length }})</h2>
 
-        <mat-card class="comment-form-card">
-            <mat-card-header>
-                <mat-card-title>Оставить комментарий</mat-card-title>
-            </mat-card-header>
-            <mat-card-content>
-                <form [formGroup]="commentForm" (ngSubmit)="submitComment()" class="comment-form">
-
-                    @if (commentForm.get('author')?.hasError('required') && commentForm.get('author')?.touched) {
-                    <span class="custom-error">Имя обязательно</span>
-                    }
-                    <mat-form-field appearance="outline" class="full-width">
-                        <mat-label>Ваше имя</mat-label>
-                        <input matInput formControlName="author" placeholder="Например, Иван">
-                    </mat-form-field>
-
-                    @if (commentForm.get('text')?.hasError('required') && commentForm.get('text')?.touched) {
-                    <span class="custom-error">Текст комментария обязателен</span>
-                    }
-                    <mat-form-field appearance="outline" class="full-width">
-                        <mat-label>Текст комментария</mat-label>
-                        <textarea matInput formControlName="text" rows="3"
-                                  placeholder="Что вы думаете об этом?"></textarea>
-                    </mat-form-field>
-
-                    <button mat-raised-button style="background-color: var(--color-green); color: white;" type="submit"
-                            [disabled]="commentForm.invalid">
-                        Отправить
-                    </button>
-                </form>
-            </mat-card-content>
-        </mat-card>
+        <app-comment-form (commentSubmitted)="submitNewComment($event)"></app-comment-form>
 
         <div class="comments-list">
             @for (comment of comments(); track comment.id) {
-            <mat-card class="comment-card">
-                <mat-card-header>
-                    <div mat-card-avatar class="comment-avatar">
-                        <mat-icon>account_circle</mat-icon>
-                    </div>
-                    <mat-card-title>{{ comment.author }}</mat-card-title>
-                    <mat-card-subtitle>{{ comment.date }}</mat-card-subtitle>
-                </mat-card-header>
-
-                <mat-card-content>
-                    <p class="comment-text">{{ comment.text }}</p>
-                </mat-card-content>
-
-                <mat-card-actions class="comment-actions">
-                    <button mat-icon-button
-                            [style.color]="userCommentReactions[comment.id] === 1 ? 'var(--color-green)' : 'var(--color-muted)'"
-                            (click)="changeCommentRating(comment.id, comment.rating, 1)">
-                        <mat-icon>thumb_up</mat-icon>
-                    </button>
-                    <span class="rating-score" [class.positive]="comment.rating > 0"
-                          [class.negative]="comment.rating < 0">
-                        {{ comment.rating }}
-                    </span>
-                    <button mat-icon-button
-                            [style.color]="userCommentReactions[comment.id] === -1 ? '#f44336' : 'var(--color-muted)'"
-                            (click)="changeCommentRating(comment.id, comment.rating, -1)">
-                        <mat-icon>thumb_down</mat-icon>
-                    </button>
-                </mat-card-actions>
-            </mat-card>
+            <app-comment-item [comment]="comment" [userReaction]="userCommentReactions[comment.id] || 0"
+                              (rate)="changeCommentRating(comment.id, comment.rating, $event)">
+            </app-comment-item>
             } @empty {
             <p class="no-comments">Пока нет комментариев. Будьте первым!</p>
             }

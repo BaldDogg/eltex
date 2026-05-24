@@ -24,4 +24,12 @@ export class ArticlesStoreService {
     public setCurrentPage(page: number): void {
         this.currentPage.set(page);
     }
+
+    // принудительное обновление из памяти
+    public refreshFromStorage(): void {
+        const posts: Post[] = JSON.parse(localStorage.getItem('blogPosts') || '[]');
+        this.posts.set(posts);
+        this.totalCount.set(posts.length);
+        this.isLoaded.set(true);
+    }
 }

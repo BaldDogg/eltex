@@ -34,7 +34,7 @@ export class Home implements OnInit {
     public store = inject(ArticlesStoreService);
     private titleService = inject(Title);
 
-    // последние посты (отдельно от пагинации, фикс ошибки)
+    // последние посты (теперь точно фикс ошибки :)) 
     protected recentPosts = signal<any[]>([]);
 
     private destroyRef = inject(DestroyRef);
@@ -46,10 +46,5 @@ export class Home implements OnInit {
             this.recentPosts.set(res.posts);
         });
 
-        if (!this.store.isLoaded()) {
-            this.dataService.getPosts(1, 100).pipe(takeUntilDestroyed(this.destroyRef)).subscribe(res => {
-                this.store.setPostsData(res.posts, res.totalCount);
-            });
-        }
     }
 }
