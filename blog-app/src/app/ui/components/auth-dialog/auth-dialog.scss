@@ -1,0 +1,159 @@
+// форма
+.auth-form-col {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding-top: 10px;
+}
+
+// ошибка
+.error-msg {
+    color: #f44336;
+    font-size: 14px;
+    font-weight: 500;
+    margin: 0;
+    text-align: center;
+}
+
+.dialog-actions {
+    padding-bottom: 20px;
+    padding-right: 20px;
+}
+
+// кнопки
+.cancel-btn {
+    color: var(--color-green-dark) !important;
+    font-size: 16px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, color 0.3s ease !important;
+
+    &:hover {
+        background-color: var(--color-green) !important;
+        color: var(--color-white) !important;
+    }
+}
+
+.confirm-btn {
+    background-color: var(--color-green) !important;
+    color: var(--color-white) !important;
+    font-size: 16px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease !important;
+
+    &:hover {
+        background-color: var(--color-green-dark) !important;
+    }
+}
+
+::ng-deep {
+    .mdc-dialog__surface {
+        background-color: var(--color-white) !important;
+    }
+
+    .mat-mdc-dialog-title {
+        color: var(--color-accent) !important;
+        text-align: center;
+    }
+
+    // чекбокс
+    .mdc-checkbox .mdc-checkbox__native-control:enabled:checked~.mdc-checkbox__background,
+    .mdc-checkbox .mdc-checkbox__native-control:enabled:indeterminate~.mdc-checkbox__background {
+        background-color: var(--color-green) !important;
+        border-color: var(--color-green) !important;
+    }
+
+    .mat-mdc-checkbox label {
+        color: var(--color-muted) !important;
+    }
+
+    // инпут
+    .auth-form-col {
+        mat-form-field.mat-mdc-form-field {
+            .mdc-text-field--outlined {
+                &:not(.mdc-text-field--invalid) {
+
+                    .mdc-notched-outline__leading,
+                    .mdc-notched-outline__notch,
+                    .mdc-notched-outline__trailing {
+                        border-color: var(--color-grey-light);
+                    }
+
+                    .mdc-floating-label,
+                    .mat-mdc-form-field-label {
+                        color: var(--color-muted);
+                    }
+
+                    &:hover {
+
+                        .mdc-notched-outline__leading,
+                        .mdc-notched-outline__notch,
+                        .mdc-notched-outline__trailing {
+                            border-color: var(--color-accent);
+                        }
+                    }
+
+                    &.mdc-text-field--focused {
+
+                        .mdc-notched-outline__leading,
+                        .mdc-notched-outline__notch,
+                        .mdc-notched-outline__trailing {
+                            border-color: var(--color-green);
+                            border-width: 2px;
+                        }
+
+                        .mdc-floating-label,
+                        .mat-mdc-form-field-label {
+                            color: var(--color-green);
+                        }
+                    }
+                }
+
+                .mat-mdc-input-element,
+                .mdc-text-field__input {
+                    color: var(--color-accent);
+                    caret-color: var(--color-green);
+                }
+            }
+        }
+    }
+
+    // темная тема
+    .dark-theme {
+        .mdc-dialog__surface {
+            background-color: var(--color-white) !important;
+        }
+
+        .mat-mdc-dialog-title {
+            color: var(--color-accent) !important;
+        }
+
+        .dialog-text {
+            color: var(--color-muted) !important;
+        }
+
+        .cancel-btn {
+            color: var(--color-green) !important;
+            background-color: var(--color-white) !important;
+
+            &:hover {
+                background-color: var(--color-green) !important;
+                color: var(--color-white) !important;
+            }
+        }
+
+        .auth-form-col {
+            mat-form-field.mat-mdc-form-field {
+                .mdc-text-field--outlined:not(.mdc-text-field--invalid) {
+                    &:hover {
+
+                        .mdc-notched-outline__leading,
+                        .mdc-notched-outline__notch,
+                        .mdc-notched-outline__trailing {
+                            border-color: var(--color-green);
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

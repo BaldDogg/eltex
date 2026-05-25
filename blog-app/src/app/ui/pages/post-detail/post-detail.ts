@@ -1,9 +1,8 @@
-import { Component, OnInit, inject, DestroyRef } from '@angular/core';
+import { Component, OnInit, OnDestroy, inject, DestroyRef } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { ReactiveFormsModule } from '@angular/forms';
 import { switchMap, catchError, of } from 'rxjs';
-import { DatePipe } from '@angular/common';
 
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -11,7 +10,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 
-import { PostDetailService } from '../../../services/post-detail/post-detail';
+import { HttpPostDetailService } from '../../../services/post-detail/http-post-detail';
+import { MockPostDetailService } from '../../../services/post-detail/mock-post-detail';
 import { PostDetailStore } from '../../../services/post-detail/post-detail-store';
 import { PostComment } from '../../../services/articles/types/post-comment.interface';
 import { WsService } from '../../../services/ws';
@@ -33,22 +33,32 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
         MatInputModule,
         MatButtonModule,
         MatIconModule,
-        DatePipe,
         CommentForm,
         CommentItem
     ],
     providers: [
         PostDetailStore,
+        HttpPostDetailService,
+        MockPostDetailService,
         {
             provide: POST_DETAIL_SERVICE_TOKEN,
-            useClass: PostDetailService
+            useFactory: () => {
+                const isGithub = window.location.hostname.includes('github.io');
+                const token = localStorage.getItem('access_token');
+                const isMockMode = !token || token.startsWith('mock-local-token');
+
+                if (isGithub || isMockMode) {
+                    return inject(MockPostDetailService);
+                }
+
+                return inject(HttpPostDetailService);
+            }
         }
     ],
     templateUrl: './post-detail.html',
     styleUrl: './post-detail.scss'
 })
-export class PostDetail implements OnInit {
-    // сервисы
+export class PostDetail implements OnInit, OnDestroy {
     private route = inject(ActivatedRoute);
     private dataService = inject(POST_DETAIL_SERVICE_TOKEN);
     private store = inject(PostDetailStore);
@@ -70,7 +80,17 @@ export class PostDetail implements OnInit {
     ngOnInit(): void {
         // подключение к сокетам
         this.wsService.connect();
+        this.loadPostData();
+        this.listenToWsMessages();
+    }
 
+    ngOnDestroy(): void {
+        if (this.currentWsArticleId) {
+            this.wsService.unsubscribeFromArticle(this.currentWsArticleId);
+        }
+    }
+
+    private loadPostData(): void {
         this.route.paramMap.pipe(
             switchMap(params => {
                 this.store.isLoading.set(true);
@@ -107,19 +127,20 @@ export class PostDetail implements OnInit {
                 const allUserReactions = JSON.parse(localStorage.getItem('userReactions') || '{}');
                 this.userPostReaction = allUserReactions[data.post.id] || 0;
 
-                data.comments.forEach(c => {
+                data.comments.forEach((c: PostComment) => {
                     this.userCommentReactions[c.id] = allUserReactions[c.id] || 0;
                 });
 
                 this.store.isLoading.set(false);
             }
         });
+    }
 
-        // слушаем события сокетов
+    private listenToWsMessages(): void {
         this.wsService.messages$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(msg => {
             if (msg.event === 'comment-created' || msg.type === 'COMMENT_CREATED') {
                 const currentComments = this.store.comments();
-                if (!currentComments.find(c => c.id === msg.payload.commentId)) {
+                if (!currentComments.find((c: PostComment) => c.id === msg.payload.commentId)) {
                     const newC: PostComment = {
                         id: msg.payload.commentId,
                         postId: msg.payload.articleId,
@@ -132,7 +153,7 @@ export class PostDetail implements OnInit {
                 }
             }
             if (msg.event === 'comment-rating-changed' || msg.type === 'COMMENT_RATING_CHANGED') {
-                const updatedComments = this.store.comments().map(c =>
+                const updatedComments = this.store.comments().map((c: PostComment) =>
                     c.id === msg.payload.commentId ? { ...c, rating: msg.payload.rating } : c
                 );
                 this.store.comments.set(updatedComments);
@@ -142,13 +163,6 @@ export class PostDetail implements OnInit {
                 if (currentPost && currentPost.id === msg.payload.articleId) {
                     this.store.updatePostRating(msg.payload.rating);
                 }
-            }
-        });
-
-        // чистка подписок
-        this.destroyRef.onDestroy(() => {
-            if (this.currentWsArticleId) {
-                this.wsService.unsubscribeFromArticle(this.currentWsArticleId);
             }
         });
     }
@@ -180,7 +194,7 @@ export class PostDetail implements OnInit {
         this.dataService.addComment(newComment).pipe(takeUntilDestroyed(this.destroyRef)).subscribe(createdComments => {
             if (createdComments && createdComments.length > 0) {
                 const currentComments = this.store.comments();
-                if (!currentComments.find(c => c.id === createdComments[0].id)) {
+                if (!currentComments.find((c: PostComment) => c.id === createdComments[0].id)) {
                     this.store.comments.set([...createdComments, ...currentComments]);
                 }
             }
@@ -227,8 +241,7 @@ export class PostDetail implements OnInit {
         const newRating = currentRating + ratingDelta;
         this.saveUserReactionToStorage(commentId, this.userCommentReactions[commentId]);
 
-        // мгновенное обновление
-        const updatedComments = this.store.comments().map(c =>
+        const updatedComments = this.store.comments().map((c: PostComment) =>
             c.id === commentId ? { ...c, rating: newRating } : c
         );
         this.store.comments.set(updatedComments);

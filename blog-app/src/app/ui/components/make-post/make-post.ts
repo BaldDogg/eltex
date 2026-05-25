@@ -96,7 +96,22 @@ export class MakePost implements OnInit {
         const file = event.target.files[0];
         if (file) {
             this.selectedFileName = `Выбран файл: ${file.name}`;
-            this.postForm.get('image')?.setValue(file);
+
+            // проверка режима (бэкенд или локально)
+            const token = localStorage.getItem('access_token');
+            const isMockMode = !token || token.startsWith('mock-local-token');
+
+            if (isMockMode) {
+                // localstorage
+                const reader = new FileReader();
+                reader.onload = (e: any) => {
+                    this.postForm.get('image')?.setValue(e.target.result);
+                };
+                reader.readAsDataURL(file);
+            } else {
+                // бэкенд
+                this.postForm.get('image')?.setValue(file);
+            }
         } else {
             this.selectedFileName = 'Загрузить картинку';
             this.postForm.get('image')?.setValue('assets/kotik-template.jpg');

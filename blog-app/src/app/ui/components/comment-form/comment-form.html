@@ -4,6 +4,8 @@
     </mat-card-header>
     <mat-card-content>
         <form [formGroup]="commentForm" (ngSubmit)="submitComment()" class="comment-form">
+
+            @if (!authStore.currentUser()) {
             @if (commentForm.get('author')?.hasError('required') && commentForm.get('author')?.touched) {
             <span class="custom-error">Имя обязательно</span>
             }
@@ -11,6 +13,7 @@
                 <mat-label>Ваше имя</mat-label>
                 <input matInput formControlName="author" placeholder="Например, Иван">
             </mat-form-field>
+            }
 
             @if (commentForm.get('text')?.hasError('required') && commentForm.get('text')?.touched) {
             <span class="custom-error">Текст комментария обязателен</span>
@@ -21,7 +24,7 @@
             </mat-form-field>
 
             <button mat-raised-button style="background-color: var(--color-green); color: white;" type="submit"
-                    [disabled]="commentForm.invalid">
+                    [disabled]="commentForm.invalid && !authStore.currentUser()">
                 Отправить
             </button>
         </form>

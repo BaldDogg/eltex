@@ -1,3 +1,12 @@
+import { Post } from "../../models/post";
+
+export interface BackendPaginatedResponse {
+    items: ArticleEntity[];
+    total: number;
+    page: number;
+    limit: number;
+}
+
 // создание поста
 export interface CreateArticleDto {
     title: string;
