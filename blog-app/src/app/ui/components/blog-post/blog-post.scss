@@ -1,5 +1,6 @@
 :host {
     display: block;
+    min-width: 0;
 }
 
 :host(:first-child) {
@@ -21,6 +22,7 @@
             justify-content: center;
             flex: 2;
             padding: 20px 40px 20px 0;
+            min-width: 0;
         }
 
         .post-text {
@@ -91,16 +93,23 @@
         display: none;
     }
 
+    // предотвращение ошибок с очень длинными темами
     .post-theme {
         padding: 0 5px;
         font-size: 14px;
         color: var(--color-orange);
+        display: -webkit-box;
+        -webkit-line-clamp: 1;
+        line-clamp: 1;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
         margin: 0;
     }
 }
 
 .post-title,
-.post-text {
+.post-text,
+.post-theme {
     word-break: break-word;
     overflow-wrap: anywhere;
 }

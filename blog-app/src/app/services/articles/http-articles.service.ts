@@ -1,20 +1,13 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { forkJoin, Observable, of, throwError } from 'rxjs';
+import { forkJoin, Observable, of } from 'rxjs';
 import { map, switchMap, catchError } from 'rxjs/operators';
 import { IArticlesService } from './articles-service.interface';
 import { Post } from '../../models/post';
 import { PaginatedPosts } from './types/paginated-posts.interface';
 import { ArticleMapperService } from './article-mapper.service';
-import { ArticleEntity, CategoryEntity } from './article-backend.interfaces';
+import { ArticleEntity, CategoryEntity, BackendPaginatedResponse } from './article-backend.interfaces';
 import { ArticlesStoreService } from './articles-store.service';
-
-interface BackendPaginatedResponse {
-    items: ArticleEntity[];
-    total: number;
-    page: number;
-    limit: number;
-}
 
 @Injectable()
 export class HttpArticlesService implements IArticlesService {
@@ -102,20 +95,29 @@ export class HttpArticlesService implements IArticlesService {
 
     // добавление поста
     public addPost(post: Post, page: number, limit: number): Observable<PaginatedPosts> {
+        const isGithubPages = window.location.hostname.includes('github.io');
+
+        if (isGithubPages) {
+            const allPosts: Post[] = JSON.parse(localStorage.getItem(this.POSTS_KEY) || '[]');
+            allPosts.unshift(post);
+            localStorage.setItem(this.POSTS_KEY, JSON.stringify(allPosts));
+            return this.getPosts(page, limit);
+        }
+
         return this.getOrCreateCategory(post.theme).pipe(
             switchMap(categoryId => {
                 const formData = new FormData();
                 formData.append('title', post.title);
                 formData.append('content', post.text);
                 formData.append('categoryId', categoryId);
-                if ((post.image as any) instanceof File) formData.append('image', post.image as any);
+
+                if ((post.image as unknown) instanceof File) {
+                    formData.append('image', post.image as unknown as File);
+                } else if (typeof post.image === 'string') {
+                    formData.append('image', post.image);
+                }
+
                 return this.http.post<ArticleEntity>(this.apiUrl, formData);
-            }),
-            catchError(() => {
-                const allPosts: Post[] = JSON.parse(localStorage.getItem(this.POSTS_KEY) || '[]');
-                allPosts.unshift(post);
-                localStorage.setItem(this.POSTS_KEY, JSON.stringify(allPosts));
-                return of(null);
             }),
             switchMap(() => this.getPosts(page, limit))
         );
@@ -123,21 +125,28 @@ export class HttpArticlesService implements IArticlesService {
 
     // обновление поста
     public updatePost(post: Post, page: number, limit: number): Observable<PaginatedPosts> {
+        const isGithubPages = window.location.hostname.includes('github.io');
+
+        if (isGithubPages) {
+            const allPosts: Post[] = JSON.parse(localStorage.getItem(this.POSTS_KEY) || '[]');
+            const index = allPosts.findIndex(p => p.id === post.id);
+            if (index !== -1) allPosts[index] = post;
+            localStorage.setItem(this.POSTS_KEY, JSON.stringify(allPosts));
+            return this.getPosts(page, limit);
+        }
+
         return this.getOrCreateCategory(post.theme).pipe(
             switchMap(categoryId => {
                 const formData = new FormData();
                 formData.append('title', post.title);
                 formData.append('content', post.text);
                 formData.append('categoryId', categoryId);
-                if ((post.image as any) instanceof File) formData.append('image', post.image as any);
+
+                if ((post.image as unknown) instanceof File) {
+                    formData.append('image', post.image as unknown as File);
+                }
+
                 return this.http.patch<ArticleEntity>(`${this.apiUrl}/${post.id}`, formData);
-            }),
-            catchError(() => {
-                const allPosts: Post[] = JSON.parse(localStorage.getItem(this.POSTS_KEY) || '[]');
-                const index = allPosts.findIndex(p => p.id === post.id);
-                if (index !== -1) allPosts[index] = post;
-                localStorage.setItem(this.POSTS_KEY, JSON.stringify(allPosts));
-                return of(null);
             }),
             switchMap(() => this.getPosts(page, limit))
         );

@@ -12,6 +12,26 @@
                 <li>
                     <a class="navigation-menu-link" (click)="scrollToContacts()" style="cursor: pointer;">Контакты</a>
                 </li>
+
+                <li class="auth-section">
+                    @if (authStore.currentUser(); as user) {
+                    <button mat-icon-button [matMenuTriggerFor]="userMenu" class="user-profile-btn">
+                        <mat-icon>account_circle</mat-icon>
+                    </button>
+                    <mat-menu #userMenu="matMenu">
+                        <div class="user-info-text" style="padding: 10px 16px; font-weight: bold;">
+                            Пользователь: <br> {{ user.username }}
+                        </div>
+                        <hr style="margin: 0; border: 0; border-top: 1px solid var(--color-grey-light);">
+                        <button mat-menu-item (click)="logout()">Выход</button>
+                    </mat-menu>
+                    } @else {
+                    <button class="navigation-menu-link auth-login-btn" (click)="openAuth()"
+                            style="background: transparent; border: none; cursor: pointer; font-size: inherit; font-family: inherit;">
+                        Вход
+                    </button>
+                    }
+                </li>
                 <li>
                     <button class="theme-toggle" (click)="toggleTheme()" title="Сменить тему">
                         {{ changeThemeSymbol() }}

@@ -10,11 +10,12 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from '../../components/confirm-dialog/confirm-dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { HasRoleDirective } from '../../../core/src/app/core/has-role.directive';
 
 @Component({
     selector: 'app-blog',
     standalone: true,
-    imports: [BlogPost, MakePost, MatIconModule],
+    imports: [BlogPost, MakePost, MatIconModule, HasRoleDirective],
     templateUrl: './blog.html',
     styleUrl: './blog.scss',
 })

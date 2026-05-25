@@ -1,5 +1,5 @@
 <article class="blog-post">
-    <div class="post-actions">
+    <div *appHasRole="'admin'" class="post-actions">
         <button mat-icon-button class="edit-btn" (click)="onEdit()" title="Редактировать">
             <mat-icon>edit</mat-icon>
         </button>

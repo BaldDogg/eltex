@@ -4,11 +4,12 @@ import { Post } from '../../../models/post';
 import { RouterLink } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
+import { HasRoleDirective } from '../../../core/src/app/core/has-role.directive';
 
 @Component({
     selector: 'app-blog-post',
     standalone: true,
-    imports: [CommonModule, RouterLink, MatIconModule, MatButtonModule],
+    imports: [CommonModule, RouterLink, MatIconModule, MatButtonModule, HasRoleDirective],
     templateUrl: './blog-post.html',
     styleUrl: './blog-post.scss'
 })
@@ -18,9 +19,8 @@ export class BlogPost {
 
     // событие удаления
     @Output() deletePostEvent = new EventEmitter<string>();
-
-    // событие редактирования поста
-    @Output() public editPostEvent = new EventEmitter<Post>();
+    // событие редактирования
+    @Output() editPostEvent = new EventEmitter<Post>();
 
     protected onDelete() {
         this.deletePostEvent.emit(this.post.id);

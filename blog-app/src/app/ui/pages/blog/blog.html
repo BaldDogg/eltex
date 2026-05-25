@@ -1,10 +1,12 @@
-<aside class="blog-aside-bar" [class.is-open]="isMobileMenuOpen">
+<aside *appHasRole="'admin'" class="blog-aside-bar" [class.is-open]="isMobileMenuOpen">
     <button class="mobile-menu-toggle" (click)="toggleMobileMenu()">
         <mat-icon class="aside-logo">menu</mat-icon>
     </button>
+
     <button class="make-post-aside" title="Создать статью" (click)="openMakePost()">
         <mat-icon class="aside-logo">post_add</mat-icon>
     </button>
+
     <button class="statistics-aside" title="Посмотреть статистику" (click)="openStats()">
         <mat-icon class="aside-logo">analytics</mat-icon>
     </button>

@@ -1,0 +1,57 @@
+<h2 mat-dialog-title>{{ isLoginMode() ? 'Войти' : 'Регистрация' }}</h2>
+
+<mat-dialog-content>
+    <form [formGroup]="authForm" class="auth-form-col">
+        <mat-form-field appearance="outline">
+            <mat-label>Логин</mat-label>
+            <input matInput formControlName="username">
+        </mat-form-field>
+
+        @if (!isLoginMode()) {
+        <mat-form-field appearance="outline">
+            <mat-label>Email</mat-label>
+            <input matInput type="email" formControlName="email">
+        </mat-form-field>
+
+        <mat-checkbox formControlName="isAdmin">Зарегистрировать как Админа</mat-checkbox>
+        }
+
+        <mat-form-field appearance="outline">
+            <mat-label>Пароль</mat-label>
+            <input matInput [type]="hidePassword() ? 'password' : 'text'" formControlName="password">
+            <button mat-icon-button matSuffix (click)="togglePasswordVisibility($event)" type="button">
+                <mat-icon>{{hidePassword() ? 'visibility_off' : 'visibility'}}</mat-icon>
+            </button>
+        </mat-form-field>
+
+        @if (!isLoginMode()) {
+        <mat-form-field appearance="outline">
+            <mat-label>Повторите пароль</mat-label>
+            <input matInput [type]="hideConfirmPassword() ? 'password' : 'text'" formControlName="confirmPassword">
+            <button mat-icon-button matSuffix (click)="toggleConfirmPasswordVisibility($event)" type="button">
+                <mat-icon>{{hideConfirmPassword() ? 'visibility_off' : 'visibility'}}</mat-icon>
+            </button>
+        </mat-form-field>
+
+        @if (authForm.hasError('passwordMismatch') && authForm.get('confirmPassword')?.touched) {
+        <span class="custom-error" style="margin-top: -10px;">Пароли не совпадают</span>
+        }
+        }
+
+        @if (errorMessage()) {
+        <p class="error-msg">{{ errorMessage() }}</p>
+        }
+    </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end" class="dialog-actions">
+    @if (isLoginMode()) {
+    <button mat-button class="cancel-btn" (click)="toggleMode()" type="button">Регистрация</button>
+    <button mat-raised-button class="confirm-btn" (click)="submit()" [disabled]="authForm.invalid"
+            type="submit">Вход</button>
+    } @else {
+    <button mat-button class="cancel-btn" (click)="toggleMode()" type="button">Отмена</button>
+    <button mat-raised-button class="confirm-btn" (click)="submit()" [disabled]="authForm.invalid"
+            type="submit">Зарегистрироваться</button>
+    }
+</mat-dialog-actions>
